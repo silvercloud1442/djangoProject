@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+
+from django.conf import settings
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,22 +29,20 @@ SECRET_KEY = 'django-insecure-hs+)^dph#xt)4i35vz0cjsj_4j&17ezu@5#&p2i)59d%f6_l(6
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+SETTINGS = dict((key,val) for key, val in locals().items() if key.isupper())
+if not settings.configured:
+    settings.configure(**SETTINGS)
 
 # Application definition
 
 INSTALLED_APPS = [
-    # 'admin_tools',
-    # 'admin_tools.theming',
-    # 'admin_tools.menu',
-    # 'admin_tools.dashboard',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'tours'
+    'tours.apps.ToursConfig'
 ]
 
 MIDDLEWARE = [
