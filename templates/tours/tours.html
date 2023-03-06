@@ -1,14 +1,22 @@
-{% extends "./base.html" %}
+{% extends 'tours/base.html'%}
 
-{% block content%}
+{% block content %}
 <h1>TOURS PAGE</h1>
-<ol class="list-group list-group-numbered">
-    {% for tour in tours %}
-    <li class="list-group-item list-group-item-action">
-        {{ tour.name }} <br>
-        {{ tour.description }} <br>
-        {{ tour.price }} рублей
-    </li>
-    {% endfor %}
-</ol>
+
+<ul class="list-group">
+
+{% for tour in tours %}
+
+<li class="list-group-item list-group-item-action">
+    <h3>{{ tour.name }}</h3>
+    <h5>Категория : {{ tour.category }}</h5>
+    <h4>{{ tour.description }}</h4>
+    <h3>Цена : {{ tour.price }}</h3>
+    <img src="{{ tour.image.url }}" width="400" height="350" alt="...">
+</li>
+
+{% endfor %}
+
+</ul>
+
 {% endblock %}

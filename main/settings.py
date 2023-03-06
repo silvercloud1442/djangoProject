@@ -61,7 +61,10 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR, 'templates'),
-                 os.path.join(BASE_DIR, 'venv/lib/site-packages/django/contrib/admin/templates')]
+                 os.path.join(BASE_DIR, 'venv/lib/python3.7/site-packages/django/contrib/admin/templates'),
+                 os.path.join(BASE_DIR, '../venv/lib/python3.7/site-packages/django/contrib/admin/templates'),
+                 os.path.join(BASE_DIR, 'venv/lib/site-packages/django/contrib/admin/templates'),
+                 os.path.join(BASE_DIR, '../venv/lib/site-packages/django/contrib/admin/templates')]
         ,
         'APP_DIRS': False,
         'OPTIONS': {
@@ -111,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'UTC'
 
@@ -126,6 +129,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIR = [BASE_DIR / 'static']
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
