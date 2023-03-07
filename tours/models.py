@@ -1,4 +1,6 @@
 from django.db import models
+from django.urls import reverse
+
 
 class Category(models.Model):
     name = models.CharField(max_length=128, verbose_name='Категория')
@@ -6,6 +8,10 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
 
 class Tour(models.Model):
     name = models.CharField(max_length=128, verbose_name='Название тура')
@@ -15,4 +21,11 @@ class Tour(models.Model):
     category = models.ForeignKey(to=Category, on_delete=models.PROTECT, verbose_name='Категория')
 
     def __str__(self):
-        return f"Название тура : {self.name} | Описание тура : {self.description}"
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('show_tour', kwargs={'tour_id': self.pk})
+
+    class Meta:
+        verbose_name = 'Тур'
+        verbose_name_plural = 'Туры'

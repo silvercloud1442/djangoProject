@@ -1,0 +1,10 @@
+{% extends 'tours/base.html' %}
+
+{% block content %}
+<h1>{{ tour.name }}</h1>
+    <h3>{{ tour.description }}</h3>
+    <h2>Цена:{{ tour.price }}</h2>
+    <img src="{{ tour.image.url }}" alt="">
+    <a href="{% url 'tours' %}"><button>Назад</button></a>
+
+{% endblock %}

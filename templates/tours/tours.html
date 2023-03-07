@@ -13,6 +13,7 @@
     <h4>{{ tour.description }}</h4>
     <h3>Цена : {{ tour.price }}</h3>
     <img src="{{ tour.image.url }}" width="400" height="350" alt="...">
+    <a href="{{ tour.get_absolute_url }}"><button>Открыть</button></a>
 </li>
 
 {% endfor %}
