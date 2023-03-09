@@ -16,15 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls.static import static
-from tours.views import index, tours, show_tour
+from tours.views import index, tours, show_tour, add_tour
 from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
     path('tours/', tours, name='tours'),
-    path('show_tour/<int:tour_id>/', show_tour, name='show_tour')
+    path('add_tour/', add_tour, name='add_tour'),
+    path('show_tour/<slug:tour_slug>/', show_tour, name='show_tour')
 ]
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

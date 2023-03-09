@@ -4,6 +4,7 @@ from django.urls import reverse
 
 class Category(models.Model):
     name = models.CharField(max_length=128, verbose_name='Категория')
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
     description = models.TextField(verbose_name='Описание', null=True, blank=True)
 
     def __str__(self):
@@ -15,6 +16,7 @@ class Category(models.Model):
 
 class Tour(models.Model):
     name = models.CharField(max_length=128, verbose_name='Название тура')
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
     description = models.TextField(verbose_name='Описание тура')
     price = models.IntegerField(verbose_name='Цена')
     image = models.ImageField(upload_to='tours_images', verbose_name='Изображение')
@@ -24,7 +26,7 @@ class Tour(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('show_tour', kwargs={'tour_id': self.pk})
+        return reverse('show_tour', kwargs={'tour_slug': self.slug})
 
     class Meta:
         verbose_name = 'Тур'

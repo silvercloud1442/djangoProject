@@ -1,0 +1,12 @@
+{% extends 'tours/base.html' %}
+
+{% block content %}
+<h1>Добавление тура</h1>
+<form action="{% url 'add_tour' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add</button>
+
+</form>
+
+{% endblock %}

@@ -1,4 +1,6 @@
 from django.shortcuts import render
+
+from tours.forms import AddTourForm
 from tours.models import *
 
 def index(request):
@@ -16,8 +18,22 @@ def tours(requset):
     }
     return render(requset, 'tours/tours.html', context=context)
 
-def show_tour(request, tour_id):
-    tour = Tour.objects.get(pk=tour_id)
+def add_tour(request):
+    if request.method == 'POST':
+        form = AddTourForm(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data)
+    else:
+        form = AddTourForm()
+    context = {
+                'title': 'ADD TOUR',
+                'form': form
+    }
+    return render(request, 'tours/add_page.html', context=context
+                  )
+
+def show_tour(request, tour_slug):
+    tour = Tour.objects.get(slug=tour_slug)
     context = {
                 'title': tour.name,
                 'tour': tour
