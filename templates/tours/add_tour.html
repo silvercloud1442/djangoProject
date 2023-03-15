@@ -1,10 +1,9 @@
-{% extends 'tours/base.html' %}
+{% extends "tours/base.html" %}
 
 {% block content %}
 <h1>Добавление тура</h1>
 <form action="{% url 'add_tour' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-
     {{ form.as_p }}
     <button type="submit">Add</button>
 

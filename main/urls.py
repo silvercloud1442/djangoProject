@@ -16,13 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls.static import static
-from tours.views import index, tours, show_tour, add_tour
+from tours.views import *
 from django.conf import settings
 
 urlpatterns = [
+    path('', TourHome.as_view(), name='index'),
     path('admin/', admin.site.urls),
-    path('', index, name='index'),
-    path('tours/', tours, name='tours'),
+    path('tour_category/<slug:cat_slug>', tour_category, name='tour_category'),
     path('add_tour/', add_tour, name='add_tour'),
     path('show_tour/<slug:tour_slug>/', show_tour, name='show_tour')
 ]
