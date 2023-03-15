@@ -10,7 +10,6 @@ from tours.models import *
 menu = [
     {'title': 'Main page', 'url': 'index'},
     {'title': 'Add tour', 'url': 'add_tour'},
-    # {'title': 'Tours', 'url' : 'tours'}
 ]
 
 class TourHome(ListView):
@@ -28,6 +27,28 @@ class TourHome(ListView):
     def get_queryset(self):
         return Tour.objects.all()
 
+
+class TourCategory(ListView):
+    model = Tour
+    template_name = 'tours/tours.html'
+    context_object_name = 'tours'
+
+    def get_queryset(self):
+        category = Category.objects.get(slug=self.kwargs['cat_slug'])
+        return Tour.objects.filter(category=category)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Category - ' + str(context['tours'][0].category)
+        context['menu'] = menu
+        context['categories'] = Category.objects.all()
+        context['cat_selected'] = self.kwargs['cat_slug']
+        return context
+
+
+
+
+
 # def index(request):
 #     context = {
 #         'title': 'INDEX PAGE',
@@ -36,16 +57,18 @@ class TourHome(ListView):
 #     return render(request, 'tours/index.html', context=context)
 
 
-def tour_category(requset, cat_slug):
-    context = {
-        'title': 'TOURS PAGE',
-        'tours': Tour.objects.fillter(cat_slug='cat_slug'),
-        'categories': Category.objects.all(),
-        'cat_selected': cat_slug,
-        'menu' : menu,
-
-    }
-    return render(requset, 'tours/tours.html', context=context)
+# def tour_category(requset, cat_slug):
+#     category = Category.objects.get(slug=cat_slug)
+#     tours = Tour.objects.filter(category=category)
+#     context = {
+#         'title': 'TOURS PAGE',
+#         'tours': tours,
+#         'categories': Category.objects.all(),
+#         'cat_selected': cat_slug,
+#         'menu' : menu,
+#
+#     }
+#     return render(requset, 'tours/tours.html', context=context)
 
 
 @csrf_exempt
@@ -61,7 +84,7 @@ def add_tour(request):
         'title': 'ADD TOUR',
         'form': form,
         'categories': Category.objects.all(),
-        'cat_selected': 0,
+        'cat_selected': None,
         'menu' : menu,
     }
     return render(request, 'tours/add_tour.html', context=context)

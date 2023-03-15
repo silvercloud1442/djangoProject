@@ -22,7 +22,7 @@ from django.conf import settings
 urlpatterns = [
     path('', TourHome.as_view(), name='index'),
     path('admin/', admin.site.urls),
-    path('tour_category/<slug:cat_slug>', tour_category, name='tour_category'),
+    path('tour_category/<slug:cat_slug>', TourCategory.as_view(), name='tour_category'),
     path('add_tour/', add_tour, name='add_tour'),
     path('show_tour/<slug:tour_slug>/', show_tour, name='show_tour')
 ]
