@@ -18,6 +18,9 @@ class TourHome(ListView):
     template_name = 'tours/index.html'
     context_object_name = 'tours'
 
+    def get_queryset(self):
+        return Tour.objects.all()
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['menu'] = menu
@@ -25,8 +28,7 @@ class TourHome(ListView):
         context['categories'] = Category.objects.all()
         context['cat_selected'] = 0
         return context
-    def get_queryset(self):
-        return Tour.objects.all()
+
 
 
 class TourCategory(ListView):
