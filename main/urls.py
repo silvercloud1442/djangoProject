@@ -21,7 +21,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('', TourHome.as_view(), name='index'),
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls, name='login'),
     path('add_tour/', AddTour.as_view(), name='add_tour'),
     path('tour_category/<slug:cat_slug>', TourCategory.as_view(), name='tour_category'),
     path('show_tour/<slug:tour_slug>/', ShowPost.as_view(), name='show_tour'),

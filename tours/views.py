@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView, DetailView, CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 from .forms import AddTourForm
 from .models import *
@@ -14,6 +16,7 @@ menu = [
 ]
 
 class TourHome(DataMixin, ListView):
+    paginate_by = 2
     model = Tour
     template_name = 'tours/index.html'
     context_object_name = 'tours'
@@ -34,7 +37,8 @@ class TourHome(DataMixin, ListView):
 
 
 
-class TourCategory(ListView):
+class TourCategory(DataMixin, ListView):
+    paginate_by = 2
     model = Tour
     template_name = 'tours/tours.html'
     context_object_name = 'tours'
@@ -47,10 +51,10 @@ class TourCategory(ListView):
         context = super().get_context_data(**kwargs)
         dop_context = {
             'title' : 'Category - ' + str(context['tours'][0].category),
-            'cat_selected' : self.kwargs['cat_slug']
+            'cat_selected' : context['tours'][0].category.slug
         }
-        c_def = self.get_context_data(**dop_context)
-        context = dict(list(context.items()) * list(c_def.items))
+        c_def = self.get_user_context(**dop_context)
+        context = dict(list(context.items()) + list(c_def.items()))
 
         return context
 
@@ -71,10 +75,12 @@ class ShowPost(DataMixin, DetailView):
 
         return context
 
-class AddTour(DataMixin, CreateView):
+class AddTour(LoginRequiredMixin, DataMixin, CreateView):
     form_class = AddTourForm
     template_name = 'tours/add_tour.html'
     success_url = reverse_lazy('index')
+    login_url = reverse_lazy('home')
+    raise_exception = True
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
