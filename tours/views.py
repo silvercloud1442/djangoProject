@@ -3,9 +3,9 @@ from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView, DetailView, CreateView
 
-from tours.forms import AddTourForm
-from tours.models import *
-
+from .forms import AddTourForm
+from .models import *
+from .utils import *
 
 
 menu = [
@@ -13,20 +13,23 @@ menu = [
     {'title': 'Add tour', 'url': 'add_tour'},
 ]
 
-class TourHome(ListView):
+class TourHome(DataMixin, ListView):
     model = Tour
     template_name = 'tours/index.html'
     context_object_name = 'tours'
 
     def get_queryset(self):
+
         return Tour.objects.all()
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['menu'] = menu
-        context['title'] = 'Main page'
-        context['categories'] = Category.objects.all()
-        context['cat_selected'] = 0
+        dop_context = {
+                'title': 'Main page'
+        }
+        c_def = self.get_user_context(**dop_context)
+        context = dict(list(context.items()) + list(c_def.items()))
+
         return context
 
 
@@ -42,13 +45,16 @@ class TourCategory(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Category - ' + str(context['tours'][0].category)
-        context['menu'] = menu
-        context['categories'] = Category.objects.all()
-        context['cat_selected'] = self.kwargs['cat_slug']
+        dop_context = {
+            'title' : 'Category - ' + str(context['tours'][0].category),
+            'cat_selected' : self.kwargs['cat_slug']
+        }
+        c_def = self.get_context_data(**dop_context)
+        context = dict(list(context.items()) * list(c_def.items))
+
         return context
 
-class ShowPost(DetailView):
+class ShowPost(DataMixin, DetailView):
     model = Tour
     template_name = 'tours/show_tour.html'
     context_object_name = 'tour'
@@ -56,23 +62,28 @@ class ShowPost(DetailView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['menu'] = menu
-        context['title'] = context['tour']
-        context['categories'] = Category.objects.all()
-        context['cat_selected'] = context['tour'].category.slug
+        dop_context = {
+            'title' : context['tour'],
+            'cat_selected': context['tour'].category.slug
+        }
+        c_def = self.get_user_context(**dop_context)
+        context = dict(list(context.items()) + list(c_def.items()))
+
         return context
 
-class AddTour(CreateView):
+class AddTour(DataMixin, CreateView):
     form_class = AddTourForm
     template_name = 'tours/add_tour.html'
     success_url = reverse_lazy('index')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['menu'] = menu
-        context['title'] = 'Add tour'
-        context['categories'] = Category.objects.all()
-        context['cat_selected'] = 1
+        dop_context = {
+            'title': 'Add tour'
+        }
+        c_def = self.get_user_context(**dop_context)
+        context = dict(list(context.items()) + list(c_def.items()))
+
         return context
 
 # def index(request):
