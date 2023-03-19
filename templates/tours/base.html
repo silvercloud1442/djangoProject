@@ -23,17 +23,20 @@
             <ul class="navbar-nav">
 
               {% for item in menu%}
-                {% if forloop.last %}
-                    <li class="nav-item">
-                        <a class="nav-link active last" aria-current="page" href="{% url item.url %}">{{ item.title}}</a>
-                    </li>
-                {% else %}
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{% url item.url %}">{{ item.title}}</a>
                     </li>
-                {% endif %}
               {% endfor %}
 
+              {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                    {{ user.username }} | <a class="nav-link active" href="{% url 'logout' %}">Logout</a>
+                </li>
+              {% else %}
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'register' %}">Регистрация</a> | <a class="nav-link active" href="{% url 'login' %}">Войти</a>
+                </li>
+              {% endif %}
             </ul>
           </div>
         </div>

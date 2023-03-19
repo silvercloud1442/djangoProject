@@ -15,7 +15,7 @@ class Category(models.Model):
     class Meta:
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
-        ordering = ['title',]
+        ordering = ['name',]
 
 class Tour(models.Model):
     name = models.CharField(max_length=128, verbose_name='Название тура')
@@ -34,3 +34,4 @@ class Tour(models.Model):
     class Meta:
         verbose_name = 'Тур'
         verbose_name_plural = 'Туры'
+        ordering = ['name']

@@ -1,4 +1,6 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
 from tours.models import *
@@ -7,6 +9,7 @@ class AddTourForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['category'].empty_label = 'Не выбрано'
+
     class Meta:
         model = Tour
         fields = '__all__'
@@ -20,3 +23,23 @@ class AddTourForm(forms.ModelForm):
         if len(title) > 200:
             raise ValidationError('Длина превышает 200 символов')
         return title
+
+class RegisterUserForm(UserCreationForm):
+    username = forms.CharField(label='Логин', widget=forms.TextInput(attrs={"class" : 'form-control'}))
+    email = forms.EmailField(label='Email', widget=forms.TextInput(attrs={"class" : 'form-control'}))
+    password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={"class": 'form-control'}))
+    password2 = forms.CharField(label='Повтор пароля', widget=forms.PasswordInput(attrs={"class": 'form-control'}))
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password1', 'password2')
+        # widgets = {
+        #     'username' : forms.TextInput(attrs={"class" : 'form-control'}),
+        #     # 'password1' : forms.PasswordInput(attrs={"class" : 'form-control'}),
+        #     # 'password2' : forms.PasswordInput(attrs={"class" : 'form-control'}),
+        #
+        # }
+
+class LoginUserForm(AuthenticationForm):
+    username = forms.CharField(label='Login', widget=forms.TextInput(attrs={"class" : 'form-control'}))
+    password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={"class" : 'form-control'}))
