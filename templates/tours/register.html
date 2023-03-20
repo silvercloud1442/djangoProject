@@ -1,0 +1,18 @@
+{% extends 'tours/base.html' %}
+
+{% block content %}
+
+    <form method="post">
+    <div class="form-group">
+        {% csrf_token %}
+        {% for f in form %}
+            <div class="form-group">
+                <p><label class="form-control" for="f.id_for_label">{{ f.label }}</label>{{ f }}</p>
+                <div class="row-form-errors">{{ f.errors }}</div>
+            </div>
+        {%  endfor %}
+        <button type="submit">Регистрация</button>
+    </div>
+    </form>
+
+{% endblock %}
