@@ -4,11 +4,11 @@ from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-from .forms import AddTourForm, RegisterUserForm, LoginUserForm
+from .forms import AddTourForm, RegisterUserForm, LoginUserForm, ContactForm
 from .models import *
 from .utils import *
 
@@ -131,6 +131,24 @@ class AddTour(LoginRequiredMixin, DataMixin, CreateView):
         context = dict(list(context.items()) + list(c_def.items()))
 
         return context
+
+class ContactFormView(DataMixin, FormView):
+    form_class = ContactForm
+    template_name = 'tours/contact.html'
+    success_url = reverse_lazy('index')
+
+    def get_context_data(self, **kwargs):
+        contex = super().get_context_data(**kwargs)
+        dop_context = {
+            'title' : 'Contact'
+        }
+        c_def = self.get_user_context(**dop_context)
+        contex = dict(list(contex.items()) + list(c_def.items()))
+
+        return contex
+
+    def from_valid(self, form):
+        return redirect('index')
 
 def logout_user(request):
     logout(request)
