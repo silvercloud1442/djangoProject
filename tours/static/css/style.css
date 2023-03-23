@@ -267,7 +267,6 @@ th {
 .hom-body-section:before {
     content: '';
     position: fixed;
-    background: linear-gradient(to top, rgba(29, 31, 31, 0.7) 14%, rgba(0, 0, 0, 0.26) 66%);
     top: 0px;
     bottom: 0px;
     left: 0px;
@@ -3310,11 +3309,11 @@ a.ui-button:active,
 /*-------------------------------------------------------*/
 
 footer {
-    color: #a2a2a3;
+    color: #ffffff;
     font-weight: 300;
     padding: 100px 0 100px;
     border-top: 1px solid #f5f5f5;
-    background-color: #f9f9f9;
+    background-color: #ffffff;
 }
 .foot-logo img {
     padding-bottom: 20px;

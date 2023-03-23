@@ -267,7 +267,6 @@ th {
 .hom-body-section:before {
     content: '';
     position: fixed;
-    background: linear-gradient(to top, rgba(29, 31, 31, 0.7) 14%, rgba(0, 0, 0, 0.26) 66%);
     top: 0px;
     bottom: 0px;
     left: 0px;

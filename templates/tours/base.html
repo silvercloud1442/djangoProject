@@ -30,7 +30,7 @@
 
 <body>
 <!--HEADER SECTION-->
-	<section>
+	<section class="main">
 		<div class="menu-section">
 			<div class="container">
 				<div class="row">
@@ -76,30 +76,6 @@
 							</li>
 							<li>
 								<a href="#!" data-toggle="modal" data-target="#modal3"><img src="images/icon/13.png" alt=""> Forgot Password</a>
-							</li>
-						</ul>
-						<!-- Dropdown Structure -->
-						<ul id='drop-home' class='dropdown-content drop-con-man'>
-							<li><a href="index.html">Home - Default</a>
-							</li>
-							<li><a href="index-1.html">Home - Reservation</a>
-							</li>
-							<li><a href="index-2.html">Home - FullSlider</a>
-							</li>
-							<li><a href="index-3.html">Home - Block Color</a>
-							</li>
-						</ul>
-						<!-- Dropdown Structure -->
-						<ul id='dropdown2' class='dropdown-content drop-con-man'>
-							<li><a href="#!">English</a>
-							</li>
-							<li><a href="#!">Spanish</a>
-							</li>
-							<li><a href="#!">Hindi</a>
-							</li>
-							<li><a href="#!">Russian</a>
-							</li>
-							<li><a href="#!">Portuguese</a>
 							</li>
 						</ul>
 						<!-- ROOM Dropdown Structure -->
@@ -232,13 +208,13 @@
 				</div>
 				<div class="row">
 					<div class="logo">
-						<a href="index.html"><img src="images/logo.png" alt="" />
+						<a href="index.html"><img src="{% static 'images/logo.png' %}" alt="" />
 						</a>
 					</div>
 					<div class="menu-bar">
 						<ul>
-							<li><a href="#" class='dropdown-button' data-activates='drop-home'>Home <i class="fa fa-angle-down"></i></a>
-							</li>
+{#							<li><a href="#" class='dropdown-button' data-activates='drop-home'>Home </a>#}
+{#							</li>#}
 							<li><a href="#" class='dropdown-button' data-activates='drop-room'>Rooms <i class="fa fa-angle-down"></i></a>
 							</li>
 							<li><a href="services.html">Services</a>
