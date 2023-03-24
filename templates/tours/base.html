@@ -30,7 +30,7 @@
 
 <body>
 <!--HEADER SECTION-->
-	<section class="main">
+	<section class="{{ section_type }}">
 		<div class="menu-section">
 			<div class="container">
 				<div class="row">
@@ -235,13 +235,12 @@
 		<!-- HEADER SECTION-->
 
         <!-- -->
-
         <!-- CONTENT SECTION -->
 
         {% block content %}
         {% endblock content %}
 
-
+	</section>
         <!-- FOOTER SECTION -->
         <footer class="site-footer clearfix">
 		<div class="sidebar-container">
