@@ -54,3 +54,23 @@ class Clients(models.Model):
             if ipd < date.today():
                 raise ValidationError('Некорректная дата загран. паспорта')
         return cleaned_data
+
+class Payment(models.Model):
+    payment_system = models.CharField(max_length=30, verbose_name='')
+    card_number = models.CharField(max_length=20, verbose_name='')
+    card_date = models.DateField(verbose_name='')
+    client_id = models.ForeignKey(to=Clients, on_delete="CASCADE")
+
+    def clean(self):
+        cleaned_data = super(Payment, self).clean()
+        cn = cleaned_data.get('card_number')
+        cd = cleaned_data.get('card_date')
+
+        if cn:
+            if len(cn) != 16:
+                raise ValidationError('Некорректный номер карты')
+        if cd:
+            if cd < date.today():
+                raise ValidationError('Неккоректная дата')
+
+
