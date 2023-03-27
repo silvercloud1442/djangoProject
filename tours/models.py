@@ -49,6 +49,9 @@ class Rooms(models.Model):
         self.total_places = self.solo_places + (self.twin_places * 2)
         super(Rooms, self).save(*args, **kwargs)
 
+    def __str__(self):
+        return f'Отел{self.hotel} 1x:{self.solo_places}, 2x{self.twin_places}'
+
     # def __str__(self):
     #     return f"Всего мест {self.total_places}" \
     #            f"Односпальных : {self.solo_places}"\

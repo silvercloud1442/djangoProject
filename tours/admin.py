@@ -48,6 +48,7 @@ class PaymentAdmin(admin.ModelAdmin):
 class BookingAdmin(admin.ModelAdmin):
     list_display = ('payment_status', 'adults_count', 'kids_count', 'total_price', 'tour', 'client', 'room')
     list_display_links = ('payment_status',)
+    readonly_fields = ('total_price',)
     save_on_top = True
 
 class HotelImagesAdmin(admin.ModelAdmin):
