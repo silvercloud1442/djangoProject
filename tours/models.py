@@ -47,6 +47,7 @@ class Rooms(models.Model):
 
 class Tours(models.Model):
     name = models.CharField(max_length=255, verbose_name='')
+    slug = models.SlugField(name, max_length=255)
     description = models.TextField(verbose_name='')
     city = models.CharField(max_length=255, verbose_name='')
     duration_days = models.IntegerField(verbose_name='')
@@ -121,4 +122,9 @@ class Booking(models.Model):
         super(Booking, self).save(*args, **kwargs)
 
 class HotelImages(models.Model):
-    image = models.ImageField()
+    hotel = models.ForeignKey(to=Hotels, verbose_name='', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to=f'hotels_images/{hotel.slug}', verbose_name='')
+
+class TourImages(models.Model):
+    tour = models.ForeignKey(to=Tours, verbose_name='', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to=f'tours_images/{tour.slug}')
