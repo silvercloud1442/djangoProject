@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-hs+)^dph#xt)4i35vz0cjsj_4j&17ezu@5#&p2i)59d%f6_l(6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 SETTINGS = dict((key,val) for key, val in locals().items() if key.isupper())
 if not settings.configured:
     settings.configure(**SETTINGS)
@@ -137,5 +137,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 INTERNAL_IPS = [
+    '192.158.0.103',
     '127.0.0.1',
+
 ]

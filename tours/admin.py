@@ -18,9 +18,9 @@ class HotelsAdmin(admin.ModelAdmin):
     save_on_top = True
 
 class RoomsAdmin(admin.ModelAdmin):
-    list_display = ('description', 'add_price', 'solo_places', 'twin_places', 'count_in_hotel', 'hotel')
+    list_display = ('description', 'add_price', 'solo_places', 'twin_places', 'hotel')
     list_display_links = ('description',)
-    fields = ('description', 'add_price', 'solo_places', 'twin_places', 'count_in_hotel', 'hotel')
+    fields = ('description', 'add_price', 'solo_places', 'twin_places', 'hotel')
     save_on_top = True
 
 class ToursAdmin(admin.ModelAdmin):
