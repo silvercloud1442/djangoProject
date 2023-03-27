@@ -20,6 +20,10 @@ class Transit(models.Model):
                 raise ValidationError('Некорректные дата и время')
         return cleande_date
 
+    class Meta:
+        verbose_name = 'Транспорт'
+        verbose_name_plural = 'Транспорт'
+
 class Hotels(models.Model):
     name = models.TextField(max_length=255, verbose_name='Название')
     slug = models.SlugField(name, max_length=255)
@@ -37,6 +41,10 @@ class Hotels(models.Model):
                 raise ValidationError('Некорректный рейтинг')
         return cleaned_data
 
+    class Meta:
+        verbose_name = 'Отель'
+        verbose_name_plural = 'Отели'
+
 class Rooms(models.Model):
     description = models.TextField(verbose_name='Описание')
     add_price = models.IntegerField(validators=[min_valid], verbose_name='Добавочная стоимость')
@@ -44,6 +52,10 @@ class Rooms(models.Model):
     twin_places = models.IntegerField(validators=[min_valid], verbose_name='Двойных мест')
     count_in_hotel = models.IntegerField(validators=[min_valid], verbose_name='кол-во в отеле')
     hotel = models.ForeignKey(to=Hotels, on_delete=models.CASCADE, verbose_name='Отель')
+
+    class Meta:
+        verbose_name = 'Комната в отеле'
+        verbose_name_plural = 'Комнаты в отелях'
 
 class Tours(models.Model):
     name = models.CharField(max_length=255, verbose_name='Название')
@@ -67,6 +79,10 @@ class Tours(models.Model):
             raise ValidationError('Некорректное количество клиентов')
         return cleaned_data
 
+    class Meta:
+        verbose_name = 'Тур'
+        verbose_name_plural = 'Туры'
+
 class Clients(models.Model):
     login = models.CharField(max_length=50, unique=True, verbose_name='Логин')
     password = models.CharField(max_length=50, verbose_name='Пароль')
@@ -76,7 +92,7 @@ class Clients(models.Model):
     phone = models.CharField(max_length=20, verbose_name='Номер телефона', blank=True)
     passport_series_number = models.CharField(max_length=30, verbose_name='Серия и номер паспорта', unique=True)
     inter_passport_series_number = models.CharField(max_length=30, verbose_name='Серия и номер загранпаспорта', unique=True, blank=True)
-    inter_passport_date = models.DateField(verbose_name='Дата загранпаспорта')
+    inter_passport_date = models.DateField(verbose_name='Дата загранпаспорта', blank=True)
 
     def clean(self):
         cleaned_data = super(Clients, self).clean()
@@ -85,6 +101,10 @@ class Clients(models.Model):
             if ipd < date.today():
                 raise ValidationError('Некорректная дата загран. паспорта')
         return cleaned_data
+
+    class Meta:
+        verbose_name = 'Клиент'
+        verbose_name_plural = 'Клиенты'
 
 class Payment(models.Model):
     payment_system = models.CharField(max_length=30, verbose_name='Система оплаты')
@@ -104,6 +124,10 @@ class Payment(models.Model):
             if cd < date.today():
                 raise ValidationError('Неккоректная дата')
 
+    class Meta:
+        verbose_name = 'Платежная информация'
+        verbose_name_plural = 'Платежная информация'
+
 class Booking(models.Model):
     payment_status = models.CharField(max_length=255, verbose_name='Статус опалты')
     adults_count = models.IntegerField(validators=[min_valid], verbose_name='Всего взрослых')
@@ -120,6 +144,10 @@ class Booking(models.Model):
         self.tour.save()
         super(Booking, self).save(*args, **kwargs)
 
+    class Meta:
+        verbose_name = 'Заказ тура'
+        verbose_name_plural = 'Заказы туров'
+
 class HotelImages(models.Model):
     hotel = models.ForeignKey(to=Hotels, verbose_name='Отель', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='', verbose_name='Изображение')
@@ -129,6 +157,11 @@ class HotelImages(models.Model):
         self.image.upload_to = f'hotels_images/{hslug}'
         self.hotel.save()
         super(HotelImages, self).save()
+
+    class Meta:
+        verbose_name = 'Фото отеля'
+        verbose_name_plural = 'Фото отелей'
+
 class TourImages(models.Model):
     tour = models.ForeignKey(to=Tours, on_delete=models.CASCADE, verbose_name='Тур')
     image = models.ImageField(upload_to='', verbose_name='Изображение')
@@ -138,3 +171,7 @@ class TourImages(models.Model):
         self.image.upload_to = f'tours_images/{tslug}'
         self.tour.save()
         super(TourImages, self).save()
+
+    class Meta:
+        verbose_name = 'Фото тура'
+        verbose_name_plural = 'Фото туров'
