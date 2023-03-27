@@ -38,27 +38,26 @@ class Hotels(models.Model):
         return cleaned_data
 
 class Rooms(models.Model):
-    description = models.TextField(verbose_name='')
-    add_price = models.IntegerField(validators=[min_valid], verbose_name='')
-    solo_places = models.IntegerField(validators=[min_valid], verbose_name='')
-    twin_places = models.IntegerField(validators=[min_valid], verbose_name='')
-    count_in_hotel = models.IntegerField(validators=[min_valid], verbose_name='')
-    hotel = models.ForeignKey(to=Hotels, on_delete=models.CASCADE)
+    description = models.TextField(verbose_name='Описание')
+    add_price = models.IntegerField(validators=[min_valid], verbose_name='Добавочная стоимость')
+    solo_places = models.IntegerField(validators=[min_valid], verbose_name='одиночных мест')
+    twin_places = models.IntegerField(validators=[min_valid], verbose_name='Двойных мест')
+    count_in_hotel = models.IntegerField(validators=[min_valid], verbose_name='кол-во в отеле')
+    hotel = models.ForeignKey(to=Hotels, on_delete=models.CASCADE, verbose_name='Отель')
 
 class Tours(models.Model):
-    name = models.CharField(max_length=255, verbose_name='')
+    name = models.CharField(max_length=255, verbose_name='Название')
     slug = models.SlugField(name, max_length=255)
-    description = models.TextField(verbose_name='')
-    city = models.CharField(max_length=255, verbose_name='')
-    duration_days = models.IntegerField(verbose_name='')
-    max_adults = models.IntegerField(validators=[min_valid], verbose_name='')
-    max_kids = models.IntegerField(validators=[min_valid], verbose_name='')
-    base_price = models.IntegerField(validators=[min_valid], verbose_name='')
-    need_inter_pass = models.BooleanField(verbose_name='')
-    transit_in = models.OneToOneField(Transit, on_delete=models.PROTECT, related_name='transit_in_relate')
-    transit_back = models.OneToOneField(Transit, on_delete=models.PROTECT, related_name='transit_back_relate')
-    hotel = models.ForeignKey(to=Hotels, on_delete=models.PROTECT)
-    room = models.ForeignKey(to=Rooms, on_delete=models.PROTECT)
+    description = models.TextField(verbose_name='Описание')
+    city = models.CharField(max_length=255, verbose_name='Город/место')
+    duration_days = models.IntegerField(verbose_name='длительность (дней)')
+    max_adults = models.IntegerField(validators=[min_valid], verbose_name='максимум взрослых')
+    max_kids = models.IntegerField(validators=[min_valid], verbose_name='масксимум детей')
+    base_price = models.IntegerField(validators=[min_valid], verbose_name='Базовая стоимость')
+    need_inter_pass = models.BooleanField(verbose_name='Нужен загранпаспорт')
+    transit_in = models.OneToOneField(Transit, on_delete=models.PROTECT, related_name='transit_in_relate', verbose_name='Транспорт туда')
+    transit_back = models.OneToOneField(Transit, on_delete=models.PROTECT, related_name='transit_back_relate', verbose_name='Транспорт обратно')
+    hotel = models.ForeignKey(to=Hotels, on_delete=models.PROTECT, verbose_name='Отель')
 
     def clean(self):
         cleaned_data = super(Tours, self).clean()
@@ -88,10 +87,10 @@ class Clients(models.Model):
         return cleaned_data
 
 class Payment(models.Model):
-    payment_system = models.CharField(max_length=30, verbose_name='')
-    card_number = models.CharField(max_length=20, verbose_name='')
-    card_date = models.DateField(verbose_name='')
-    client = models.ForeignKey(to=Clients, on_delete=models.CASCADE)
+    payment_system = models.CharField(max_length=30, verbose_name='Система оплаты')
+    card_number = models.CharField(max_length=20, verbose_name='Номер карта')
+    card_date = models.DateField(verbose_name='Срок карты')
+    client = models.ForeignKey(to=Clients, on_delete=models.CASCADE, verbose_name='Клиент')
 
     def clean(self):
         cleaned_data = super(Payment, self).clean()
@@ -106,25 +105,36 @@ class Payment(models.Model):
                 raise ValidationError('Неккоректная дата')
 
 class Booking(models.Model):
-    payment_status = models.CharField(max_length=255, verbose_name='')
-    adults_count = models.IntegerField(validators=[min_valid], verbose_name='')
-    kids_count = models.IntegerField(validators=[min_valid], verbose_name='')
-    total_price = models.IntegerField(verbose_name='')
-    tour = models.ForeignKey(to=Tours, on_delete=models.PROTECT)
-    client = models.ForeignKey(to=Clients, on_delete=models.PROTECT)
+    payment_status = models.CharField(max_length=255, verbose_name='Статус опалты')
+    adults_count = models.IntegerField(validators=[min_valid], verbose_name='Всего взрослых')
+    kids_count = models.IntegerField(validators=[min_valid], verbose_name='Всего детей')
+    total_price = models.IntegerField(verbose_name='Общая стоимость')
+    tour = models.ForeignKey(to=Tours, on_delete=models.PROTECT, verbose_name='Тур')
+    client = models.ForeignKey(to=Clients, on_delete=models.PROTECT, verbose_name='Клиент')
+    room = models.ForeignKey(to=Rooms, on_delete=models.PROTECT, verbose_name='Комната')
 
     def save(self, *args, **kwargs):
         tour_price = self.tour.base_price
-        rooms_price = self.tour.room.add_price
+        rooms_price = self.room.add_price
         self.total_price = tour_price + rooms_price
         self.tour.save()
-        self.tour.room.save()
         super(Booking, self).save(*args, **kwargs)
 
 class HotelImages(models.Model):
-    hotel = models.ForeignKey(to=Hotels, verbose_name='', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to=f'hotels_images/{hotel.slug}', verbose_name='')
+    hotel = models.ForeignKey(to=Hotels, verbose_name='Отель', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='', verbose_name='Изображение')
 
+    def save(self, *args, **kwargs):
+        hslug = self.hotel.slug
+        self.image.upload_to = f'hotels_images/{hslug}'
+        self.hotel.save()
+        super(HotelImages, self).save()
 class TourImages(models.Model):
-    tour = models.ForeignKey(to=Tours, verbose_name='', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to=f'tours_images/{tour.slug}')
+    tour = models.ForeignKey(to=Tours, on_delete=models.CASCADE, verbose_name='Тур')
+    image = models.ImageField(upload_to='', verbose_name='Изображение')
+
+    def save(self, *args, **kwargs):
+        tslug = self.tour.slug
+        self.image.upload_to = f'tours_images/{tslug}'
+        self.tour.save()
+        super(TourImages, self).save()

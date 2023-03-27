@@ -13,8 +13,9 @@ class IndexPage(DataMixin, TemplateView):
         }
         c_def = self.get_user_context(**dop_context)
 
+        print(c_def)
         context = dict(list(context.items()) + list(c_def.items()))
-
+        print(context)
         return context
 
 class TourView(DataMixin, TemplateView):
