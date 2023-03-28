@@ -34,6 +34,7 @@ class Hotels(models.Model):
         return self.name
 
     class Meta:
+        ordering = ['name']
         verbose_name = 'Отель'
         verbose_name_plural = 'Отели'
 
@@ -58,6 +59,7 @@ class Rooms(models.Model):
     #            f"Двуспальных : {self.twin_places}"
 
     class Meta:
+        ordering = ['hotel']
         verbose_name = 'Комната в отеле'
         verbose_name_plural = 'Комнаты в отелях'
 
@@ -87,6 +89,7 @@ class Tours(models.Model):
         return self.name
 
     class Meta:
+        ordering = ['name']
         verbose_name = 'Тур'
         verbose_name_plural = 'Туры'
 
@@ -113,6 +116,7 @@ class Clients(models.Model):
         return self.FIO
 
     class Meta:
+        ordering = ['login']
         verbose_name = 'Клиент'
         verbose_name_plural = 'Клиенты'
 
@@ -135,6 +139,7 @@ class Payment(models.Model):
     #             raise ValidationError('Неккоректная дата')
 
     class Meta:
+        ordering = ['client']
         verbose_name = 'Платежная информация'
         verbose_name_plural = 'Платежная информация'
 
@@ -155,6 +160,7 @@ class Booking(models.Model):
         super(Booking, self).save(*args, **kwargs)
 
     class Meta:
+        ordering = ['tour']
         verbose_name = 'Заказ тура'
         verbose_name_plural = 'Заказы туров'
 
@@ -172,6 +178,7 @@ class HotelImages(models.Model):
         super(HotelImages, self).save()
 
     class Meta:
+        ordering = ['hotel']
         verbose_name = 'Фото отеля'
         verbose_name_plural = 'Фото отелей'
 
@@ -182,8 +189,6 @@ class TourImages(models.Model):
     tour = models.ForeignKey(to=Tours, on_delete=models.CASCADE, verbose_name='Тур')
     image = models.ImageField(upload_to=tour_photo_location, verbose_name='Изображение')
 
-
-
     def save(self, *args, **kwargs):
         tslug = self.tour.slug
         self.image.upload_to = f'tours_images/{tslug}'
@@ -191,5 +196,6 @@ class TourImages(models.Model):
         super(TourImages, self).save()
 
     class Meta:
+        ordering = ['tour']
         verbose_name = 'Фото тура'
         verbose_name_plural = 'Фото туров'
