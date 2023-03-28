@@ -1,4 +1,6 @@
 from django.db import models
+from django.template.defaultfilters import truncatechars
+
 from tours.utils import *
 
 class Transit(models.Model):
@@ -30,6 +32,9 @@ class Hotels(models.Model):
     rating = models.FloatField(validators=[min_valid], verbose_name='Рейтинг')
     food = models.CharField(max_length=50, verbose_name='Питание')
 
+    @property
+    def short_description(self):
+        return truncatechars(self.description, 35)
     def __str__(self):
         return self.name
 
@@ -46,6 +51,9 @@ class Rooms(models.Model):
     total_places = models.IntegerField(verbose_name='Всего мест')
     hotel = models.ForeignKey(to=Hotels, on_delete=models.CASCADE, verbose_name='Отель')
 
+    @property
+    def short_description(self):
+        return truncatechars(self.description, 35)
     def save(self, *args, **kwargs):
         self.total_places = self.solo_places + (self.twin_places * 2)
         super(Rooms, self).save(*args, **kwargs)
@@ -77,6 +85,9 @@ class Tours(models.Model):
     transit_back = models.OneToOneField(Transit, on_delete=models.PROTECT, related_name='transit_back_relate', verbose_name='Транспорт обратно')
     hotel = models.ForeignKey(to=Hotels, on_delete=models.PROTECT, verbose_name='Отель')
 
+    @property
+    def short_description(self):
+        return truncatechars(self.description, 35)
     # def clean(self):
     #     cleaned_data = super(Tours, self).clean()
     #     ad = cleaned_data.get('max_adults')

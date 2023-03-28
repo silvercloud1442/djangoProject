@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.forms import Textarea, TextInput
 from django.utils.safestring import mark_safe
 from tours.models import *
 

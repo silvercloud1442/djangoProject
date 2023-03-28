@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from tours.utils import DataMixin
 from django.views.generic import TemplateView, DetailView
+from tours.models import *
 
 
 class IndexPage(DataMixin, TemplateView):
@@ -18,15 +19,26 @@ class IndexPage(DataMixin, TemplateView):
         print(context)
         return context
 
-class TourView(DataMixin, TemplateView):
+class TourView(DataMixin, DetailView):
+    model = Tours
     template_name = 'tours/tour_details.html'
+    context_object_name = 'tour'
+    slug_url_kwarg = 'tour_slug'
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, *, object_list, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context()
+        description = context['tour'].descritpion
+        main_text, fechs = set(description.split('fechs'))
+        fechs.split('|')
+        dop_context = {
+            'main_text': main_text,
+            'fechs' : fechs
 
+        }
+        c_def = self.get_user_context(**dop_context)
         context = dict(list(context.items()) + list(c_def.items()))
 
+        print(context)
         return context
 
 
