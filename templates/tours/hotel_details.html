@@ -73,12 +73,12 @@
                                 {% for room in rooms %}
                                     <li>
                                         <div class="re-room-list">
-                                            <div class="col-md-3 re-room-list-1"><img src="{% media 'room.main_image.url' %}" alt=""> </div>
-                                            <div class="col-md-6 re-room-list-2">
-                                                <p><b>Amenities: </b>Television, Wi-Fi, Hair dryer, Towels, Dining, Music, GYM and more.. </p> <span><b>Includes</b> : Free Parking, Breakfast, VAT</span> <span><b>Maxinum </b> : 4 Persons</span> </div>
+                                            <div class="col-md-4 re-room-list-1"><img src="{{ room.main_image.url }}" alt=""> </div>
+                                            <div class="col-md-5 re-room-list-2">
+                                                    <p><b>Описание: </b>{{ room.description }}</p> <span> <b>Односпальных мест</b> {{ room.solo_places }}</span> <span><b>Двуспальных мест </b>{{ room.twin_places }}</span> </div>
 
 {#                                                <p><b>Amenities: </b>Television, Wi-Fi, Hair dryer, Towels, Dining, Music, GYM and more.. </p> <span><b>Includes</b> : Free Parking, Breakfast, VAT</span> <span><b>Maxinum </b> : 4 Persons</span> </div>#}
-{#                                            <div class="col-md-3 re-room-list-3"> <span class="hot-list-p3-1">Price Per Night</span> <span class="hot-list-p3-2">$940</span> <a href="booking.html" class="hot-page2-alp-quot-btn spec-btn-text">Book Now</a> </div>#}
+                                            <div class="col-md-3 re-room-list-3"> <span class="hot-list-p3-1">СТОИМОСТЬ:</span> <span class="hot-list-p3-2">{{ room.add_price }} р.</span></div>
                                         </div>
                                     </li>
 								{% endfor %}
@@ -86,98 +86,98 @@
 						</div>
 					</div>
 
-                    <!-- Отзывы ????-->
-
-					<div class="inn-detail-p1 inn-com">
-						<div class="detail-title">
-							<h2>User Reviews</h2>
-							<p>a procedure intended to establish the quality, performance, or reliability of something, especially before it is taken into widespread use.</p>
-						</div>
-						<div class="room-rat-inn room-rat-bor">
-							<div class="row">
-								<div class="col-md-12 room-rat-body">
-									<div class="room-rat-img"> <img src="images/users/2.png" alt="">
-										<p>Orange Fab &amp; Weld <span>19th January, 2017</span> </p>
-									</div>
-									<div class="dir-rat-star"> <i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i> </div>
-									<p>Michael &amp; his team have been helping us with our eqiupment finance for the past 5 years - I think that says a quite a lot.. Michael is always ready to go the extra mile, always available, always helpfull that goes the same for his team that work with him - definatley our first phone call.</p>
-									<ul>
-										<li><a href="#"><span>Like</span><i class="fa fa-thumbs-o-up"></i></a> </li>
-										<li><a href="#"><span>Dis-Like</span><i class="fa fa-thumbs-o-down"></i></a> </li>
-										<li><a href="#"><span>Report</span> <i class="fa fa-flag-o"></i></a> </li>
-										<li><a href="#"><span>Comments</span> <i class="fa fa-commenting-o"></i></a> </li>
-										<li><a href="#"><span>Share Now</span>  <i class="fa fa-facebook"></i></a> </li>
-										<li><a href="#"><i class="fa fa-google-plus"></i></a> </li>
-										<li><a href="#"><i class="fa fa-twitter"></i></a> </li>
-										<li><a href="#"><i class="fa fa-linkedin"></i></a> </li>
-										<li><a href="#"><i class="fa fa-youtube"></i></a> </li>
-									</ul>
-								</div>
-							</div>
-						</div>
-						<div class="room-rat-inn room-rat-bor">
-							<div class="row">
-								<div class="col-md-12 room-rat-body">
-									<div class="room-rat-img"> <img src="images/users/5.png" alt="">
-										<p>Orange Fab &amp; Weld <span>19th January, 2017</span> </p>
-									</div>
-									<div class="dir-rat-star"> <i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i> </div>
-									<p>Michael &amp; his team have been helping us with our eqiupment finance for the past 5 years - I think that says a quite a lot.. Michael is always ready to go the extra mile, always available, always helpfull that goes the same for his team that work with him - definatley our first phone call.</p>
-									<ul>
-										<li><a href="#"><span>Like</span><i class="fa fa-thumbs-o-up"></i></a> </li>
-										<li><a href="#"><span>Dis-Like</span><i class="fa fa-thumbs-o-down"></i></a> </li>
-										<li><a href="#"><span>Report</span> <i class="fa fa-flag-o"></i></a> </li>
-										<li><a href="#"><span>Comments</span> <i class="fa fa-commenting-o"></i></a> </li>
-										<li><a href="#"><span>Share Now</span>  <i class="fa fa-facebook"></i></a> </li>
-										<li><a href="#"><i class="fa fa-google-plus"></i></a> </li>
-										<li><a href="#"><i class="fa fa-twitter"></i></a> </li>
-										<li><a href="#"><i class="fa fa-linkedin"></i></a> </li>
-										<li><a href="#"><i class="fa fa-youtube"></i></a> </li>
-									</ul>
-								</div>
-							</div>
-						</div>
-						<div class="room-rat-inn room-rat-bor">
-							<div class="row">
-								<div class="col-md-12 room-rat-body">
-									<div class="room-rat-img"> <img src="images/users/3.png" alt="">
-										<p>Orange Fab &amp; Weld <span>19th January, 2017</span> </p>
-									</div>
-									<div class="dir-rat-star"> <i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i> </div>
-									<p>Michael &amp; his team have been helping us with our eqiupment finance for the past 5 years - I think that says a quite a lot.. Michael is always ready to go the extra mile, always available, always helpfull that goes the same for his team that work with him - definatley our first phone call.</p>
-									<ul>
-										<li><a href="#"><span>Like</span><i class="fa fa-thumbs-o-up"></i></a> </li>
-										<li><a href="#"><span>Dis-Like</span><i class="fa fa-thumbs-o-down"></i></a> </li>
-										<li><a href="#"><span>Report</span> <i class="fa fa-flag-o"></i></a> </li>
-										<li><a href="#"><span>Comments</span> <i class="fa fa-commenting-o"></i></a> </li>
-										<li><a href="#"><span>Share Now</span>  <i class="fa fa-facebook"></i></a> </li>
-										<li><a href="#"><i class="fa fa-google-plus"></i></a> </li>
-										<li><a href="#"><i class="fa fa-twitter"></i></a> </li>
-										<li><a href="#"><i class="fa fa-linkedin"></i></a> </li>
-										<li><a href="#"><i class="fa fa-youtube"></i></a> </li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-
-                    <!-- Поделиться ?????-->
-					<div class="inn-detail-p1 inn-com room-soc-share">
-						<div class="detail-title">
-							<h2>Share this Room</h2>
-							<p>a procedure intended to establish the quality, performance, or reliability of something, especially before it is taken into widespread use.</p>
-						</div>
-						<ul>
-							<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i> Facebook</a> </li>
-							<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i> Google+</a> </li>
-							<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i> Twitter</a>
-							</li>
-							<li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i> LinkedIn</a>
-							</li>
-							<li><a href="#"><i class="fa fa-whatsapp" aria-hidden="true"></i> Whats App</a>
-							</li>
-						</ul>
-					</div>
+{#                    <!-- Отзывы ????-->#}
+{##}
+{#					<div class="inn-detail-p1 inn-com">#}
+{#						<div class="detail-title">#}
+{#							<h2>User Reviews</h2>#}
+{#							<p>a procedure intended to establish the quality, performance, or reliability of something, especially before it is taken into widespread use.</p>#}
+{#						</div>#}
+{#						<div class="room-rat-inn room-rat-bor">#}
+{#							<div class="row">#}
+{#								<div class="col-md-12 room-rat-body">#}
+{#									<div class="room-rat-img"> <img src="images/users/2.png" alt="">#}
+{#										<p>Orange Fab &amp; Weld <span>19th January, 2017</span> </p>#}
+{#									</div>#}
+{#									<div class="dir-rat-star"> <i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i> </div>#}
+{#									<p>Michael &amp; his team have been helping us with our eqiupment finance for the past 5 years - I think that says a quite a lot.. Michael is always ready to go the extra mile, always available, always helpfull that goes the same for his team that work with him - definatley our first phone call.</p>#}
+{#									<ul>#}
+{#										<li><a href="#"><span>Like</span><i class="fa fa-thumbs-o-up"></i></a> </li>#}
+{#										<li><a href="#"><span>Dis-Like</span><i class="fa fa-thumbs-o-down"></i></a> </li>#}
+{#										<li><a href="#"><span>Report</span> <i class="fa fa-flag-o"></i></a> </li>#}
+{#										<li><a href="#"><span>Comments</span> <i class="fa fa-commenting-o"></i></a> </li>#}
+{#										<li><a href="#"><span>Share Now</span>  <i class="fa fa-facebook"></i></a> </li>#}
+{#										<li><a href="#"><i class="fa fa-google-plus"></i></a> </li>#}
+{#										<li><a href="#"><i class="fa fa-twitter"></i></a> </li>#}
+{#										<li><a href="#"><i class="fa fa-linkedin"></i></a> </li>#}
+{#										<li><a href="#"><i class="fa fa-youtube"></i></a> </li>#}
+{#									</ul>#}
+{#								</div>#}
+{#							</div>#}
+{#						</div>#}
+{#						<div class="room-rat-inn room-rat-bor">#}
+{#							<div class="row">#}
+{#								<div class="col-md-12 room-rat-body">#}
+{#									<div class="room-rat-img"> <img src="images/users/5.png" alt="">#}
+{#										<p>Orange Fab &amp; Weld <span>19th January, 2017</span> </p>#}
+{#									</div>#}
+{#									<div class="dir-rat-star"> <i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i> </div>#}
+{#									<p>Michael &amp; his team have been helping us with our eqiupment finance for the past 5 years - I think that says a quite a lot.. Michael is always ready to go the extra mile, always available, always helpfull that goes the same for his team that work with him - definatley our first phone call.</p>#}
+{#									<ul>#}
+{#										<li><a href="#"><span>Like</span><i class="fa fa-thumbs-o-up"></i></a> </li>#}
+{#										<li><a href="#"><span>Dis-Like</span><i class="fa fa-thumbs-o-down"></i></a> </li>#}
+{#										<li><a href="#"><span>Report</span> <i class="fa fa-flag-o"></i></a> </li>#}
+{#										<li><a href="#"><span>Comments</span> <i class="fa fa-commenting-o"></i></a> </li>#}
+{#										<li><a href="#"><span>Share Now</span>  <i class="fa fa-facebook"></i></a> </li>#}
+{#										<li><a href="#"><i class="fa fa-google-plus"></i></a> </li>#}
+{#										<li><a href="#"><i class="fa fa-twitter"></i></a> </li>#}
+{#										<li><a href="#"><i class="fa fa-linkedin"></i></a> </li>#}
+{#										<li><a href="#"><i class="fa fa-youtube"></i></a> </li>#}
+{#									</ul>#}
+{#								</div>#}
+{#							</div>#}
+{#						</div>#}
+{#						<div class="room-rat-inn room-rat-bor">#}
+{#							<div class="row">#}
+{#								<div class="col-md-12 room-rat-body">#}
+{#									<div class="room-rat-img"> <img src="images/users/3.png" alt="">#}
+{#										<p>Orange Fab &amp; Weld <span>19th January, 2017</span> </p>#}
+{#									</div>#}
+{#									<div class="dir-rat-star"> <i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i> </div>#}
+{#									<p>Michael &amp; his team have been helping us with our eqiupment finance for the past 5 years - I think that says a quite a lot.. Michael is always ready to go the extra mile, always available, always helpfull that goes the same for his team that work with him - definatley our first phone call.</p>#}
+{#									<ul>#}
+{#										<li><a href="#"><span>Like</span><i class="fa fa-thumbs-o-up"></i></a> </li>#}
+{#										<li><a href="#"><span>Dis-Like</span><i class="fa fa-thumbs-o-down"></i></a> </li>#}
+{#										<li><a href="#"><span>Report</span> <i class="fa fa-flag-o"></i></a> </li>#}
+{#										<li><a href="#"><span>Comments</span> <i class="fa fa-commenting-o"></i></a> </li>#}
+{#										<li><a href="#"><span>Share Now</span>  <i class="fa fa-facebook"></i></a> </li>#}
+{#										<li><a href="#"><i class="fa fa-google-plus"></i></a> </li>#}
+{#										<li><a href="#"><i class="fa fa-twitter"></i></a> </li>#}
+{#										<li><a href="#"><i class="fa fa-linkedin"></i></a> </li>#}
+{#										<li><a href="#"><i class="fa fa-youtube"></i></a> </li>#}
+{#									</ul>#}
+{#								</div>#}
+{#							</div>#}
+{#						</div>#}
+{#					</div>#}
+{##}
+{#                    <!-- Поделиться ?????-->#}
+{#					<div class="inn-detail-p1 inn-com room-soc-share">#}
+{#						<div class="detail-title">#}
+{#							<h2>Share this Room</h2>#}
+{#							<p>a procedure intended to establish the quality, performance, or reliability of something, especially before it is taken into widespread use.</p>#}
+{#						</div>#}
+{#						<ul>#}
+{#							<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i> Facebook</a> </li>#}
+{#							<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i> Google+</a> </li>#}
+{#							<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i> Twitter</a>#}
+{#							</li>#}
+{#							<li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i> LinkedIn</a>#}
+{#							</li>#}
+{#							<li><a href="#"><i class="fa fa-whatsapp" aria-hidden="true"></i> Whats App</a>#}
+{#							</li>#}
+{#						</ul>#}
+{#					</div>#}
 
 				</div>
 			</div>

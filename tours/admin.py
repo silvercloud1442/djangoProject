@@ -94,5 +94,5 @@ admin.site.register(Booking, BookingAdmin)
 admin.site.register(HotelImages, HotelImagesAdmin)
 admin.site.register(TourImages, TourImagesAdmin)
 
-admin.site.site_header = 'Кто админ, тот чёрт!'
+admin.site.site_header = 'Кто админ? Тот чёрт!'
 

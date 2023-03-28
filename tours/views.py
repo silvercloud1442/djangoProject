@@ -54,7 +54,6 @@ class HotelView(DataMixin, DetailView):
         images_urls = [image.image.url for image in images]
 
         rooms = Rooms.objects.filter(hotel=context['hotel'])
-        room_main =
 
 
 
