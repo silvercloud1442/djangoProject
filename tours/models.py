@@ -1,7 +1,13 @@
 from django.db import models
 from django.template.defaultfilters import truncatechars
-
 from tours.utils import *
+
+def hotel_photo_location(self, filename):
+    return 'hotels/{}/{}'.format(self.hotel.slug, filename)
+def hotel_main_photo_location(self, filename):
+    return 'hotels/{}/{}'.format(self.slug, filename)
+def tour_photo_location(self, filename):
+    return 'tours/{}/{}'.format(self.tour.slug, filename)
 
 class Transit(models.Model):
     transit_id = models.CharField(max_length=255, verbose_name='Идентификатор транспорта')
@@ -9,15 +15,6 @@ class Transit(models.Model):
     end_place = models.CharField(max_length=255, verbose_name='Конечная точка')
     start_datetime = models.DateTimeField(verbose_name='Начальное время')
     end_datetime = models.DateTimeField(verbose_name='Конечное время')
-
-    # def clean(self):
-    #     cleande_date = super(Transit, self).clean()
-    #     s_dtm = cleande_date.get('start_datetime')
-    #     e_dtm = cleande_date.get('end_datetime')
-    #     if s_dtm and e_dtm:
-    #         if e_dtm < s_dtm:
-    #             raise ValidationError('Некорректные дата и время')
-    #     return cleande_date
 
     class Meta:
         verbose_name = 'Транспорт'
@@ -31,6 +28,7 @@ class Hotels(models.Model):
     city = models.CharField(max_length=50, verbose_name='Город')
     rating = models.FloatField(validators=[min_valid], verbose_name='Рейтинг')
     food = models.CharField(max_length=50, verbose_name='Питание')
+    main_image = models.ImageField(upload_to=hotel_main_photo_location, verbose_name='Изображение', blank=True)
 
     @property
     def short_description(self):
@@ -50,6 +48,7 @@ class Rooms(models.Model):
     twin_places = models.IntegerField(validators=[min_valid], verbose_name='Двойных мест')
     total_places = models.IntegerField(verbose_name='Всего мест')
     hotel = models.ForeignKey(to=Hotels, on_delete=models.CASCADE, verbose_name='Отель')
+    main_image = models.ImageField(upload_to=hotel_photo_location, verbose_name='Изображение', blank=True)
 
     @property
     def short_description(self):
@@ -60,11 +59,6 @@ class Rooms(models.Model):
 
     def __str__(self):
         return f'Отель: {self.hotel} | 1x:{self.solo_places} | 2x{self.twin_places}'
-
-    # def __str__(self):
-    #     return f"Всего мест {self.total_places}" \
-    #            f"Односпальных : {self.solo_places}"\
-    #            f"Двуспальных : {self.twin_places}"
 
     class Meta:
         ordering = ['hotel']
@@ -88,13 +82,6 @@ class Tours(models.Model):
     @property
     def short_description(self):
         return truncatechars(self.description, 35)
-    # def clean(self):
-    #     cleaned_data = super(Tours, self).clean()
-    #     ad = cleaned_data.get('max_adults')
-    #     ki = cleaned_data.get('max_kids')
-    #     if ad + ki == 0:
-    #         raise ValidationError('Некорректное количество клиентов')
-    #     return cleaned_data
 
     def __str__(self):
         return self.name
@@ -115,13 +102,7 @@ class Clients(models.Model):
     inter_passport_series_number = models.CharField(max_length=30, verbose_name='Серия и номер загранпаспорта', unique=True, blank=True)
     inter_passport_date = models.DateField(verbose_name='Дата загранпаспорта', blank=True, null=True)
 
-    # def clean(self):
-    #     cleaned_data = super().clean()
-    #     ipd = cleaned_data.get('inter_passport_date')
-    #     if ipd:
-    #         if ipd < date.today():
-    #             raise ValidationError('Некорректная дата загран. паспорта')
-    #     return cleaned_data
+
 
     def __str__(self):
         return self.FIO
@@ -137,17 +118,7 @@ class Payment(models.Model):
     card_date = models.DateField(validators=[date_valid], verbose_name='Срок карты')
     client = models.ForeignKey(to=Clients, on_delete=models.CASCADE, verbose_name='Клиент')
 
-    # def clean(self):
-    #     cleaned_data = super(Payment, self).clean()
-    #     cn = cleaned_data.get('card_number')
-    #     cd = cleaned_data.get('card_date')
-    #
-    #     if cn:
-    #         if len(cn) != 16:
-    #             raise ValidationError('Некорректный номер карты')
-    #     if cd:
-    #         if cd < date.today():
-    #             raise ValidationError('Неккоректная дата')
+
 
     class Meta:
         ordering = ['client']
@@ -175,9 +146,6 @@ class Booking(models.Model):
         verbose_name = 'Заказ тура'
         verbose_name_plural = 'Заказы туров'
 
-def hotel_photo_location(self, filename):
-    return 'hotels/{}/{}'.format(self.hotel.slug, filename)
-
 class HotelImages(models.Model):
     hotel = models.ForeignKey(to=Hotels, verbose_name='Отель', on_delete=models.CASCADE)
     image = models.ImageField(upload_to=hotel_photo_location, verbose_name='Изображение')
@@ -192,9 +160,6 @@ class HotelImages(models.Model):
         ordering = ['hotel']
         verbose_name = 'Фото отеля'
         verbose_name_plural = 'Фото отелей'
-
-def tour_photo_location(self, filename):
-    return 'tours/{}/{}'.format(self.tour.slug, filename)
 
 class TourImages(models.Model):
     tour = models.ForeignKey(to=Tours, on_delete=models.CASCADE, verbose_name='Тур')

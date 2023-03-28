@@ -11,18 +11,26 @@ class TransitAdmin(admin.ModelAdmin):
     save_on_top = True
 
 class HotelsAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description', 'contact_info', 'city', 'rating', 'food')
+    list_display = ('name', 'description', 'contact_info', 'city', 'rating', 'food', 'get_html_image')
     list_display_links = ('name',)
     search_fields = ('name', 'description')
     prepopulated_fields = {'slug': ('name', )}
-    fields = ('name', 'slug', 'description', 'contact_info', 'city', 'rating', 'food')
+    fields = ('name', 'slug', 'description', 'contact_info', 'city', 'rating', 'food', 'main_image')
     save_on_top = True
 
+    def get_html_image(self, object):
+        if object.main_image:
+            return mark_safe(f"<img src='{object.main_image.url}', width=50>")
+
 class RoomsAdmin(admin.ModelAdmin):
-    list_display = ('description', 'add_price', 'solo_places', 'twin_places', 'hotel')
+    list_display = ('description', 'add_price', 'solo_places', 'twin_places', 'hotel', 'get_html_image')
     list_display_links = ('description',)
-    fields = ('description', 'add_price', 'solo_places', 'twin_places', 'hotel')
+    fields = ('description', 'add_price', 'solo_places', 'twin_places', 'hotel', 'main_image')
     save_on_top = True
+
+    def get_html_image(self, object):
+        if object.main_image:
+            return mark_safe(f"<img src='{object.main_image.url}', width=50>")
 
 class ToursAdmin(admin.ModelAdmin):
     list_display = ('name', 'description', 'city', 'duration_days', 'max_adults', 'max_kids', 'base_price', 'need_inter_pass', 'transit_in', 'transit_back', 'hotel')

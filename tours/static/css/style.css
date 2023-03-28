@@ -1211,7 +1211,8 @@ td {} .inn-com p {} .inn-com-form {} .inn-com-form form {
     margin-bottom: 25px;
 }
 .gall-grid img {
-    width: 100%;
+    width: 300px;
+    height: 200px;
     padding: 25px;
 }
 
