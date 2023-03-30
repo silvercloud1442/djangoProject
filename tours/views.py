@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from tours.utils import DataMixin
-from django.views.generic import TemplateView, DetailView
+from django.views.generic import TemplateView, DetailView, ListView
 from tours.models import *
 
 
@@ -55,13 +55,10 @@ class HotelView(DataMixin, DetailView):
 
         rooms = Rooms.objects.filter(hotel=context['hotel'])
 
-
-
         description = context['hotel'].description
         description = description.split('fechs')
         main_text, fechs = description[0], description[1]
         fechs = fechs.split('|')
-
 
         dop_context = {
             'main_text': main_text,
@@ -69,12 +66,33 @@ class HotelView(DataMixin, DetailView):
             'rat': range(int(context['hotel'].rating)),
             'images_urls': images_urls,
             'rooms': rooms
-
         }
+
         c_def = self.get_user_context(**dop_context)
         context = dict(list(context.items()) + list(c_def.items()))
 
         return context
+
+class ToursView(DataMixin, ListView):
+    model = Tours
+    template_name = 'tours/tours.html'
+    context_object_name = 'tours'
+
+    def get_queryset(self):
+        return Tours.objects.all()
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(ToursView, self).get_context_data(**kwargs)
+
+        dop_context = {
+
+        }
+
+        c_def = self.get_user_context()
+        context = dict(list(context.items()) + list(c_def.items()))
+
+        return context
+
 
 def base(request):
     return render(request, 'tours/base.html')

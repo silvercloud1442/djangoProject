@@ -4,10 +4,15 @@ from tours.utils import *
 
 def hotel_photo_location(self, filename):
     return 'hotels/{}/{}'.format(self.hotel.slug, filename)
+
 def hotel_main_photo_location(self, filename):
     return 'hotels/{}/{}'.format(self.slug, filename)
+
 def tour_photo_location(self, filename):
     return 'tours/{}/{}'.format(self.tour.slug, filename)
+
+def tour_main_photo_location(self, filename):
+    return 'tours/{}/{}'.format(self.slug, filename)
 
 class Transit(models.Model):
     transit_id = models.CharField(max_length=255, verbose_name='Идентификатор транспорта')
@@ -15,6 +20,9 @@ class Transit(models.Model):
     end_place = models.CharField(max_length=255, verbose_name='Конечная точка')
     start_datetime = models.DateTimeField(verbose_name='Начальное время')
     end_datetime = models.DateTimeField(verbose_name='Конечное время')
+
+    def __str__(self):
+        return f"({self.start_datetime.date()}) | {self.start_place} - {self.end_place}"
 
     class Meta:
         verbose_name = 'Транспорт'
@@ -77,6 +85,7 @@ class Tours(models.Model):
     need_inter_pass = models.BooleanField(verbose_name='Нужен загранпаспорт')
     transit_in = models.OneToOneField(Transit, on_delete=models.PROTECT, related_name='transit_in_relate', verbose_name='Транспорт туда')
     transit_back = models.OneToOneField(Transit, on_delete=models.PROTECT, related_name='transit_back_relate', verbose_name='Транспорт обратно')
+    main_image = models.ImageField(upload_to=tour_main_photo_location, verbose_name='Изображение', blank=True)
     hotel = models.ForeignKey(to=Hotels, on_delete=models.PROTECT, verbose_name='Отель')
 
     @property
@@ -150,12 +159,6 @@ class HotelImages(models.Model):
     hotel = models.ForeignKey(to=Hotels, verbose_name='Отель', on_delete=models.CASCADE)
     image = models.ImageField(upload_to=hotel_photo_location, verbose_name='Изображение')
 
-    def save(self, *args, **kwargs):
-        hslug = self.hotel.slug
-        self.image.upload_to = f'hotels_images/{hslug}'
-        self.hotel.save()
-        super(HotelImages, self).save()
-
     class Meta:
         ordering = ['hotel']
         verbose_name = 'Фото отеля'
@@ -164,12 +167,6 @@ class HotelImages(models.Model):
 class TourImages(models.Model):
     tour = models.ForeignKey(to=Tours, on_delete=models.CASCADE, verbose_name='Тур')
     image = models.ImageField(upload_to=tour_photo_location, verbose_name='Изображение')
-
-    def save(self, *args, **kwargs):
-        tslug = self.tour.slug
-        self.image.upload_to = f'tours_images/{tslug}'
-        self.tour.save()
-        super(TourImages, self).save()
 
     class Meta:
         ordering = ['tour']

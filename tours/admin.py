@@ -33,12 +33,20 @@ class RoomsAdmin(admin.ModelAdmin):
             return mark_safe(f"<img src='{object.main_image.url}', width=50>")
 
 class ToursAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description', 'city', 'duration_days', 'max_adults', 'max_kids', 'base_price', 'need_inter_pass', 'transit_in', 'transit_back', 'hotel')
+    list_display = ('name', 'short_description', 'city', 'duration_days', 'max_adults', 'max_kids', 'base_price', 'need_inter_pass', 'transit_in', 'transit_back', 'hotel', 'get_html_image')
     list_display_links = ('name',)
     search_fields = ('name', 'description')
     prepopulated_fields = {'slug': ('name', )}
-    fields = ('name', 'slug', 'description', 'city', 'duration_days', 'max_adults', 'max_kids', 'base_price', 'need_inter_pass', 'transit_in', 'transit_back', 'hotel')
+    fields = ('name', 'slug', 'description', 'city', 'duration_days', 'max_adults', 'max_kids', 'base_price', 'need_inter_pass', 'transit_in', 'transit_back', 'hotel', 'main_image')
     save_on_top = True
+
+    def get_html_image(self, object):
+        if object.main_image:
+            return mark_safe(f"<img src='{object.main_image.url}', width=50>")
+
+    def short_description(self, object):
+        if object.description:
+            return object.description[:35] + '...'
 
 class ClientsAdmin(admin.ModelAdmin):
     list_display = ('login', 'FIO', 'birthday', 'email', 'phone', 'passport_series_number', 'inter_passport_series_number', 'inter_passport_date')
@@ -94,5 +102,5 @@ admin.site.register(Booking, BookingAdmin)
 admin.site.register(HotelImages, HotelImagesAdmin)
 admin.site.register(TourImages, TourImagesAdmin)
 
-admin.site.site_header = 'Кто админ? Тот чёрт!'
+admin.site.site_header = 'Кто админ-?=|!@#$%^&*()_+\,/ Тот чёрт!'
 
