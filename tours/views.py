@@ -1,6 +1,9 @@
 from django.shortcuts import render
-from tours.utils import DataMixin
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, DetailView, ListView
+
+from tours.forms import *
+from tours.utils import DataMixin
 from tours.models import *
 
 
@@ -92,6 +95,26 @@ class ToursView(DataMixin, ListView):
         context = dict(list(context.items()) + list(c_def.items()))
 
         return context
+
+@csrf_exempt
+def register(request):
+    if request.method == 'POST':
+        form = RegisterUserForm(request.POST)
+        client_form = RegisterClientForm(request.POST)
+        if form.is_valid() and client_form.is_valid():
+            user = form.save()
+            client = client_form.save(commit=False)
+            client.user = user
+            client.save()
+
+    else:
+        form = RegisterUserForm()
+        client_form = RegisterClientForm()
+    context = {
+        'user': form,
+        'client': client_form
+    }
+    return render(request, 'tours/register.html', context=context)
 
 
 def base(request):

@@ -1582,7 +1582,7 @@ td {} .inn-com p {} .inn-com-form {} .inn-com-form form {
     /* bottom: 0px; */
     
     background: #fff;
-    width: 60%;
+    width: 30%;
     margin: 0 auto;
     margin-top: 5%;
 }
@@ -1647,7 +1647,6 @@ td {} .inn-com p {} .inn-com-form {} .inn-com-form form {
 }
 .log-in-pop-right {
     float: left;
-    width: 60%;
     padding: 50px;
 }
 .log-in-pop-right h4 {

@@ -1,5 +1,9 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
 from django.template.defaultfilters import truncatechars
+from django.dispatch import receiver
+
 from tours.utils import *
 
 def hotel_photo_location(self, filename):
@@ -101,25 +105,32 @@ class Tours(models.Model):
         verbose_name_plural = 'Туры'
 
 class Clients(models.Model):
-    login = models.CharField(max_length=50, unique=True, verbose_name='Логин')
-    password = models.CharField(max_length=50, verbose_name='Пароль')
+    # login = models.CharField(max_length=50, unique=True, verbose_name='Логин')
+    # password = models.CharField(max_length=50, verbose_name='Пароль')
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     FIO = models.CharField(max_length=255, verbose_name='ФИО')
-    birthday = models.DateField(verbose_name='Дата рождения')
+    birthday = models.DateField(verbose_name='Дата рождения', null=True)
     email = models.EmailField(verbose_name='Email')
     phone = models.CharField(max_length=20, verbose_name='Номер телефона', blank=True)
     passport_series_number = models.CharField(max_length=30, verbose_name='Серия и номер паспорта', unique=True)
-    inter_passport_series_number = models.CharField(max_length=30, verbose_name='Серия и номер загранпаспорта', unique=True, blank=True)
-    inter_passport_date = models.DateField(verbose_name='Дата загранпаспорта', blank=True, null=True)
-
-
+    inter_passport_series_number = models.CharField(max_length=30, verbose_name='Серия и номер загранпаспорта', blank=True)
 
     def __str__(self):
         return self.FIO
 
     class Meta:
-        ordering = ['login']
+        ordering = ['user']
         verbose_name = 'Клиент'
         verbose_name_plural = 'Клиенты'
+
+# @receiver(post_save, sender=User)
+# def create_user_profile(sender, instance, created, **kwargs):
+#     if created:
+#         Clients.objects.create(user=instance)
+#
+# @receiver(post_save, sender=User)
+# def save_user_profile(sender, instance, **kwargs):
+#     instance.clients.save()
 
 class Payment(models.Model):
     payment_system = models.CharField(max_length=30, verbose_name='Система оплаты')

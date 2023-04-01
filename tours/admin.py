@@ -49,10 +49,10 @@ class ToursAdmin(admin.ModelAdmin):
             return object.description[:35] + '...'
 
 class ClientsAdmin(admin.ModelAdmin):
-    list_display = ('login', 'FIO', 'birthday', 'email', 'phone', 'passport_series_number', 'inter_passport_series_number', 'inter_passport_date')
-    list_display_links = ('login', 'FIO')
-    search_fields = ('login', 'FIO')
-    fields = ('login', 'password', 'FIO', 'birthday', 'email', 'phone', 'passport_series_number', 'inter_passport_series_number', 'inter_passport_date')
+    list_display = ('FIO', 'birthday', 'email', 'phone', 'passport_series_number', 'inter_passport_series_number',)
+    list_display_links = ('FIO',)
+    search_fields = ('FIO',)
+    fields = ('user', 'FIO', 'birthday', 'email', 'phone', 'passport_series_number', 'inter_passport_series_number',)
     save_on_top = True
 
 class PaymentAdmin(admin.ModelAdmin):
