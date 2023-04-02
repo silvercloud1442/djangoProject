@@ -1,0 +1,42 @@
+{% extends 'tours/base.html' %}
+
+{% block content %}
+{% load static %}
+<div id="modal2">
+			<div class="log-in-pop">
+
+				<div class="log-in-pop-right">
+					<a href="#" class="pop-close" data-dismiss="modal"><img src="{% static 'images/cancel.png' %}" alt="" />
+					</a>
+					<h4>Login</h4>
+					<p>Don't have an account? Create your account. It's take less then a minutes</p>
+					<form class="s12" method="post">
+                        {% csrf_token %}
+                        {% for f in form %}
+                            <div>
+                                <h5>{{ f.label }}</h5>
+                                <div class="input-field s12">
+                                    {{ f }}
+                                    {% if f.errors %}
+                                        <div class="alert alert-danger">{{ f.errors }}</div>
+                                    {% endif %}
+                                </div>
+
+                            </div>
+                        {% endfor %}
+
+
+						<div>
+							<div class="input-field s4">
+								<button type="submit" class="btn waves-effect waves-light">Register</button>
+						</div>
+
+						<div>
+							<div class="input-field s12"> <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#modal1">Are you a already member ? Login</a> </div>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+{% endblock content %}

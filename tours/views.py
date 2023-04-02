@@ -1,3 +1,4 @@
+from django.contrib.auth.views import LoginView
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, DetailView, ListView
@@ -9,7 +10,7 @@ from tours.models import *
 
 class IndexPage(DataMixin, TemplateView):
     template_name = 'tours/index.html'
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         dop_context = {
@@ -17,9 +18,7 @@ class IndexPage(DataMixin, TemplateView):
         }
         c_def = self.get_user_context(**dop_context)
 
-        print(c_def)
         context = dict(list(context.items()) + list(c_def.items()))
-        print(context)
         return context
 
 class TourView(DataMixin, DetailView):
@@ -27,6 +26,9 @@ class TourView(DataMixin, DetailView):
     template_name = 'tours/tour_details.html'
     context_object_name = 'tour'
     slug_url_kwarg = 'tour_slug'
+
+    def get_success_url(self):
+        return reverse_lazy('index')
 
     def get_context_data(self, *object_list, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -49,6 +51,9 @@ class HotelView(DataMixin, DetailView):
     template_name = 'tours/hotel_details.html'
     context_object_name = 'hotel'
     slug_url_kwarg = 'hotel_slug'
+
+    def get_success_url(self):
+        return reverse_lazy('index')
 
     def get_context_data(self, *object_list, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -81,20 +86,35 @@ class ToursView(DataMixin, ListView):
     template_name = 'tours/tours.html'
     context_object_name = 'tours'
 
+    def get_success_url(self):
+        return reverse_lazy('index')
+
     def get_queryset(self):
         return Tours.objects.all()
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(ToursView, self).get_context_data(**kwargs)
 
-        dop_context = {
-
-        }
-
         c_def = self.get_user_context()
         context = dict(list(context.items()) + list(c_def.items()))
 
         return context
+
+class LoginUserView(DataMixin, LoginView):
+    model = User
+    template_name = 'tours/login.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(LoginView, self).get_context_data()
+        dop_context = {
+        }
+        c_def = self.get_user_context(**dop_context)
+
+        context = dict(list(context.items()) + list(c_def.items()))
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('index')
 
 @csrf_exempt
 def register(request):
@@ -115,7 +135,6 @@ def register(request):
         'client': client_form
     }
     return render(request, 'tours/register.html', context=context)
-
 
 def base(request):
     return render(request, 'tours/base.html')

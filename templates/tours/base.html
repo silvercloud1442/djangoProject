@@ -467,30 +467,23 @@
 					<h4>Login</h4>
 					<p>Don't have an account? Create your account. It's take less then a minutes</p>
 					<form class="s12" method="POST">
-						<div>
-							<div class="input-field s12">
-								<input type="text" data-ng-model="name" class="validate">
-								<label>User name</label>
-							</div>
-						</div>
-						<div>
-							<div class="input-field s12">
-								<input type="password" class="validate">
-								<label>Password</label>
-							</div>
-						</div>
-						<div>
-							<div class="s12 log-ch-bx">
-								<p>
-									<input type="checkbox" id="test5" />
-									<label for="test5">Remember me</label>
-								</p>
-							</div>
-						</div>
+
+                        {% csrf_token %}
+                        {% for f in login_form %}
+                            <div>
+                                <div class="input-field s12">
+                                    {{ f }}
+                                    <label>{{ f.label }}</label>
+                                </div>
+                            </div>
+                        {% endfor %}
 						<div>
 							<div class="input-field s4">
 								<input type="submit" value="Login" class="waves-effect waves-light log-in-btn"> </div>
 						</div>
+
+
+
 						<div>
 							<div class="input-field s12"> <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#modal3">Forgot password</a> | <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#modal2">Create a new account</a> </div>
 						</div>
@@ -551,6 +544,7 @@
 				</div>
 			</div>
 		</div>
+
 		<!-- FORGOT SECTION -->
 		<div id="modal3" class="modal fade" role="dialog">
 			<div class="log-in-pop">

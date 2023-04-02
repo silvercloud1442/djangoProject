@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 
 from tours.models import Clients
@@ -8,6 +9,10 @@ class DateInput(forms.DateInput):
 
 class PasswordInput(forms.PasswordInput):
     input_type = "password"
+
+class LoginForm(AuthenticationForm):
+    username = forms.CharField(label='Username')
+    password = forms.CharField(label='Password', widget=forms.PasswordInput)
 
 class RegisterUserForm(forms.ModelForm):
     username = forms.CharField(label='*Login')
