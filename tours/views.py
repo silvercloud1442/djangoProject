@@ -82,6 +82,7 @@ class HotelView(DataMixin, DetailView):
         return context
 
 class ToursView(DataMixin, ListView):
+    paginate_by = 1
     model = Tours
     template_name = 'tours/tours.html'
     context_object_name = 'tours'
@@ -90,10 +91,12 @@ class ToursView(DataMixin, ListView):
         return reverse_lazy('index')
 
     def get_queryset(self):
-        return Tours.objects.all()
+        return Tours.objects.all().select_related('hotel').select_related('transit_in').select_related('transit_back')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(ToursView, self).get_context_data(**kwargs)
+
+        dop_context = {}
 
         c_def = self.get_user_context()
         context = dict(list(context.items()) + list(c_def.items()))
@@ -101,7 +104,7 @@ class ToursView(DataMixin, ListView):
         return context
 
 class LoginUserView(DataMixin, LoginView):
-    model = User
+    form_class = LoginForm
     template_name = 'tours/login.html'
 
     def get_context_data(self, **kwargs):

@@ -45,6 +45,10 @@ class Hotels(models.Model):
     @property
     def short_description(self):
         return truncatechars(self.description, 35)
+
+    def get_absolute_url(self):
+        return reverse('hotel_details', kwargs={'hotel_slug': self.slug})
+
     def __str__(self):
         return self.name
 
