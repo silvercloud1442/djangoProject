@@ -606,14 +606,15 @@ td {} .inn-com p {} .inn-com-form {} .inn-com-form form {
     font-size: 35px;
 }
 .inn-room-book {
-    padding: 7px 25px;
+    margin-top: 48%;
+    padding: 7px 4px;
     color: #fff;
     text-transform: uppercase;
     font-weight: 600;
     font-family: 'Quicksand', sans-serif;
-    border-radius: 2px;
+    border-radius: 18px;
     width: 100%;
-    font-size: 28px;
+    font-size: 22px;
     display: table-caption;
     background: #d0ae64;
     /* fallback for old browsers */
@@ -1246,7 +1247,8 @@ td {} .inn-com p {} .inn-com-form {} .inn-com-form form {
     padding-left: 0px !important;
 }
 .re-room-list-1 img {
-    width: 100%;
+    width: 200px;
+    height: 200px;
 }
 .re-room-list-2 h4 {
     margin-top: 0px;

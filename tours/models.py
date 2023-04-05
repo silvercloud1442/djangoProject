@@ -100,6 +100,9 @@ class Tours(models.Model):
     def short_description(self):
         return truncatechars(self.description, 35)
 
+    def get_absolute_url(self):
+        return reverse('tour_details', kwargs={'tour_slug': self.slug})
+
     def __str__(self):
         return self.name
 

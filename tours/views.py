@@ -32,13 +32,22 @@ class TourView(DataMixin, DetailView):
 
     def get_context_data(self, *object_list, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        hotel = Hotels.objects.get(name=context['tour'].hotel)
+
+        images = TourImages.objects.filter(tour=context['tour'])
+        images_urls = [image.image.url for image in images]
+
         description = context['tour'].description
         description = description.split('fechs')
         main_text, fechs = description[0], description[1]
         fechs = fechs.split('|')
+
         dop_context = {
+            'hotel': hotel,
             'main_text': main_text,
             'fechs' : fechs,
+            'images_urls': images_urls
 
         }
         c_def = self.get_user_context(**dop_context)
@@ -82,7 +91,7 @@ class HotelView(DataMixin, DetailView):
         return context
 
 class ToursView(DataMixin, ListView):
-    paginate_by = 1
+    paginate_by = 2
     model = Tours
     template_name = 'tours/tours.html'
     context_object_name = 'tours'

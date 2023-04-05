@@ -2731,7 +2731,7 @@ nav ul a span.badge {
     }
 }
 .container .row {
-    margin-left: -0.75rem;
+    margin-left: 4.25rem;
     margin-right: -0.75rem;
 }
 .section {
@@ -4223,7 +4223,7 @@ html {} @media only screen and (min-width: 0) {
     display: inline-block;
     height: 36px;
     line-height: 36px;
-    padding: 0 2rem;
+    padding: 0 27rem;
     text-transform: uppercase;
     vertical-align: middle;
     -webkit-tap-highlight-color: transparent;
@@ -4296,7 +4296,7 @@ html {} @media only screen and (min-width: 0) {
     transition: .2s ease-out;
     cursor: pointer;
     color: #fff;
-    background: #14addb;
+    background: #dbbb75;
     font-weight: 600;
 }
 .btn:hover,
