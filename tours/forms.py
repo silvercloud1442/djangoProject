@@ -2,13 +2,15 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 
-from tours.models import Clients
+from tours.models import Clients, Booking, Rooms
+
 
 class DateInput(forms.DateInput):
     input_type = "date"
 
 class PasswordInput(forms.PasswordInput):
     input_type = "password"
+
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(label='Username')
@@ -34,3 +36,20 @@ class RegisterClientForm(forms.ModelForm):
     class Meta:
         model = Clients
         fields = ('FIO', 'birthday', 'email', 'phone', 'passport_series_number', 'inter_passport_series_number',)
+
+class BookingForm(forms.ModelForm):
+    adults_count = forms.IntegerField(label='Количество взрослых')
+    kids_count = forms.IntegerField(label='Количество детей')
+    room = forms.ModelChoiceField(queryset=Rooms.objects.none(),)
+
+    def __init__(self, *args, **kwargs):
+        hotel = kwargs.pop('hotel', None)
+        super(BookingForm, self).__init__(*args, **kwargs)
+
+        if hotel:
+            self.fields['room'].queryset = Rooms.objects.filter(hotel=hotel)
+
+
+    class Meta:
+        model = Booking
+        fields = ('adults_count', 'kids_count', 'room')

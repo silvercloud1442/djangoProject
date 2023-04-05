@@ -202,26 +202,27 @@
 				<div class="log-in-pop-right">
 					<a href="#" class="pop-close" data-dismiss="modal"><img src="{% static 'images/cancel.png' %}" alt="" />
 					</a>
-					<h4>Login</h4>
+					<h4>Booking</h4>
 					<p>Don't have an account? Create your account. It's take less then a minutes</p>
 					<form class="s12" method="POST">
-
-                        {% csrf_token %}
-                        {% for f in login_form %}
-                            <div>
-                                <div class="input-field s12">
-                                    {{ f }}
-                                    <label>{{ f.label }}</label>
+                        {% if form %}
+                            {% csrf_token %}
+                            {% for f in form %}
+                                <div>
+                                    <h5>{{ f.label }}</h5>
+                                    <div class="input-field s12">
+                                        {{ f }}
+                                    </div>
                                 </div>
+                            {% endfor %}
+                            <div>
+                                <div class="input-field s4">
+                                    <input type="submit" value="Login" class="waves-effect waves-light log-in-btn"> </div>
                             </div>
-                        {% endfor %}
-						<div>
-							<div class="input-field s4">
-								<input type="submit" value="Login" class="waves-effect waves-light log-in-btn"> </div>
-						</div>
-						<div>
-							<div class="input-field s12"> <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#modal3">Forgot password</a> | <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#modal2">Create a new account</a> </div>
-						</div>
+                            <div>
+                                <div class="input-field s12"> <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#modal3">Forgot password</a> | <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#modal2">Create a new account</a> </div>
+                            </div>
+                        {% endif %}
 					</form>
 				</div>
 			</div>
@@ -230,18 +231,6 @@
 
 
 {% endblock content %}
-
-
-
-
-	<!--ALL SCRIPT FILES-->
-	<script src="js/jquery.min.js"></script>
-	<script src="js/jquery-ui.js"></script>
-	<script src="js/angular.min.js"></script>
-	<script src="js/bootstrap.js" type="text/javascript"></script>
-	<script src="js/materialize.min.js" type="text/javascript"></script>
-	<script src="js/jquery.mixitup.min.js" type="text/javascript"></script>
-	<script src="js/custom.js"></script>
 </body>
 
 </html>

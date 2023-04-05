@@ -1,7 +1,7 @@
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import TemplateView, DetailView, ListView
+from django.views.generic import TemplateView, DetailView, ListView, CreateView
 
 from tours.forms import *
 from tours.utils import DataMixin
@@ -27,18 +27,22 @@ class TourView(DataMixin, DetailView):
     context_object_name = 'tour'
     slug_url_kwarg = 'tour_slug'
 
+
     def get_success_url(self):
         return reverse_lazy('index')
 
     def get_context_data(self, *object_list, **kwargs):
-        context = super().get_context_data(**kwargs)
+        self.context = super().get_context_data(**kwargs)
 
-        hotel = Hotels.objects.get(name=context['tour'].hotel)
+        hotel = Hotels.objects.get(name=self.context['tour'].hotel)
 
-        images = TourImages.objects.filter(tour=context['tour'])
+        form = BookingForm()
+        form.fields['room'].queryset = Rooms.objects.filter(hotel=hotel)
+
+        images = TourImages.objects.filter(tour=self.context['tour'])
         images_urls = [image.image.url for image in images]
 
-        description = context['tour'].description
+        description = self.context['tour'].description
         description = description.split('fechs')
         main_text, fechs = description[0], description[1]
         fechs = fechs.split('|')
@@ -47,13 +51,14 @@ class TourView(DataMixin, DetailView):
             'hotel': hotel,
             'main_text': main_text,
             'fechs' : fechs,
-            'images_urls': images_urls
+            'images_urls': images_urls,
+            'form': form
 
         }
         c_def = self.get_user_context(**dop_context)
-        context = dict(list(context.items()) + list(c_def.items()))
+        self.context = dict(list(self.context.items()) + list(c_def.items()))
 
-        return context
+        return self.context
 
 class HotelView(DataMixin, DetailView):
     model = Hotels
