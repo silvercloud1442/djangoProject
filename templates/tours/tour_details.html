@@ -90,9 +90,15 @@
 						</div>
 					</div>
 
-                <a class="waves-effect waves-light btn-large" data-toggle="modal" data-target="#modal1">
-                    Забронировать
-                </a>
+                {% if user.is_authenticated %}
+                    <a class="waves-effect waves-light btn-large" href="{% url 'booking' tour_slug=tour.slug %}">
+                        Забронировать
+                    </a>
+                {% else %}
+                    <a class="waves-effect waves-light btn-large" href="{% url 'login' %}">
+                        Забронировать
+                    </a>
+                {% endif %}
 
 
 
@@ -217,7 +223,7 @@
                             {% endfor %}
                             <div>
                                 <div class="input-field s4">
-                                    <input type="submit" value="Login" class="waves-effect waves-light log-in-btn"> </div>
+                                    <input type="submit" class="waves-effect waves-light log-in-btn"> </div>
                             </div>
                             <div>
                                 <div class="input-field s12"> <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#modal3">Forgot password</a> | <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#modal2">Create a new account</a> </div>

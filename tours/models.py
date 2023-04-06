@@ -145,6 +145,8 @@ class Payment(models.Model):
     card_date = models.DateField(validators=[date_valid], verbose_name='Срок карты')
     client = models.ForeignKey(to=Clients, on_delete=models.CASCADE, verbose_name='Клиент')
 
+    def __str__(self):
+        return self.payment_system + " : " + self.card_number
 
 
     class Meta:

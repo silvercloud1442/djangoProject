@@ -1,7 +1,9 @@
+from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
-from django.shortcuts import render
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import TemplateView, DetailView, ListView, CreateView
+from django.views.generic import TemplateView, DetailView, ListView, CreateView, FormView
 
 from tours.forms import *
 from tours.utils import DataMixin
@@ -21,28 +23,59 @@ class IndexPage(DataMixin, TemplateView):
         context = dict(list(context.items()) + list(c_def.items()))
         return context
 
+class BookingView(DataMixin, FormView):
+    form_class = BookingForm
+    template_name = 'tours/booking.html'
+    success_url = reverse_lazy('index')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        print(self.request.GET)
+
+        tour = Tours.objects.get(slug=self.request.GET.get('tour_slug'))
+        hotel = Hotels.objects.get(hotel=tour.hotel)
+
+        form = BookingForm()
+        form.fields['room'].queryset = Rooms.objects.filter(hotel=hotel)
+        if self.request.user.is_authenticated:
+            client = Clients.objects.get(user=self.request.user.id)
+            form.fields['payment'].queryset = Payment.objects.filter(client=client)
+        else:
+            form.fields['payment'].queryset = Payment.objects.none()
+
+        dop_context = {
+            'hotel': hotel,
+            'form': form
+        }
+        c_def = self.get_user_context(**dop_context)
+        context = dict(list(context.items()) + list(c_def.items()))
+
+        return context
+
+
 class TourView(DataMixin, DetailView):
     model = Tours
     template_name = 'tours/tour_details.html'
     context_object_name = 'tour'
     slug_url_kwarg = 'tour_slug'
 
-
-    def get_success_url(self):
-        return reverse_lazy('index')
-
     def get_context_data(self, *object_list, **kwargs):
-        self.context = super().get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
 
-        hotel = Hotels.objects.get(name=self.context['tour'].hotel)
+        hotel = Hotels.objects.get(name=context['tour'].hotel)
 
-        form = BookingForm()
-        form.fields['room'].queryset = Rooms.objects.filter(hotel=hotel)
+        # form = BookingForm()
+        # form.fields['room'].queryset = Rooms.objects.filter(hotel=hotel)
+        # if self.request.user.is_authenticated:
+        #     client = Clients.objects.get(user=self.request.user.id)
+        #     form.fields['payment'].queryset = Payment.objects.filter(client=client)
+        # else:
+        #     form.fields['payment'].queryset = Payment.objects.none()
 
-        images = TourImages.objects.filter(tour=self.context['tour'])
+        images = TourImages.objects.filter(tour=context['tour'])
         images_urls = [image.image.url for image in images]
 
-        description = self.context['tour'].description
+        description = context['tour'].description
         description = description.split('fechs')
         main_text, fechs = description[0], description[1]
         fechs = fechs.split('|')
@@ -52,13 +85,25 @@ class TourView(DataMixin, DetailView):
             'main_text': main_text,
             'fechs' : fechs,
             'images_urls': images_urls,
-            'form': form
+            # 'form': form
 
         }
         c_def = self.get_user_context(**dop_context)
-        self.context = dict(list(self.context.items()) + list(c_def.items()))
+        context = dict(list(context.items()) + list(c_def.items()))
 
-        return self.context
+        return context
+    # def post(self, request, *args, **kwargs):
+    #     form = BookingForm(request.POST)
+    #     print(form)
+    #     if form.is_valid():
+    #         booking = form.save(commit=False)
+    #         booking.client = self.client
+    #         booking.payment_status = 'Оплачен'
+    #         booking.tour = self.context['tour']
+    #         booking.save()
+    #         return HttpResponse('good')
+    #     return HttpResponse('bad')
+
 
 class HotelView(DataMixin, DetailView):
     model = Hotels
@@ -152,6 +197,10 @@ def register(request):
         'client': client_form
     }
     return render(request, 'tours/register.html', context=context)
+
+def logout_user(request):
+    logout(request)
+    return redirect('index')
 
 def base(request):
     return render(request, 'tours/base.html')

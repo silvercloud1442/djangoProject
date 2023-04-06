@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 
-from tours.models import Clients, Booking, Rooms
+from tours.models import Clients, Booking, Rooms, Payment
 
 
 class DateInput(forms.DateInput):
@@ -41,10 +41,15 @@ class BookingForm(forms.ModelForm):
     adults_count = forms.IntegerField(label='Количество взрослых')
     kids_count = forms.IntegerField(label='Количество детей')
     room = forms.ModelChoiceField(queryset=Rooms.objects.none(),)
+    payment = forms.ModelChoiceField(queryset=Payment.objects.none(), )
 
     def __init__(self, *args, **kwargs):
         hotel = kwargs.pop('hotel', None)
+        payment = kwargs.pop('payment', None)
         super(BookingForm, self).__init__(*args, **kwargs)
+
+        if payment:
+            self.fields['payment'].queryset = payment
 
         if hotel:
             self.fields['room'].queryset = Rooms.objects.filter(hotel=hotel)
