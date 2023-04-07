@@ -30,15 +30,15 @@ class BookingView(DataMixin, FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        print(self.request.GET)
 
-        tour = Tours.objects.get(slug=self.request.GET.get('tour_slug'))
-        hotel = Hotels.objects.get(hotel=tour.hotel)
+        tour = Tours.objects.get(slug=self.kwargs['tour_slug'])
+        hotel = Hotels.objects.get(tours__slug=tour.slug)
 
         form = BookingForm()
         form.fields['room'].queryset = Rooms.objects.filter(hotel=hotel)
         if self.request.user.is_authenticated:
-            client = Clients.objects.get(user=self.request.user.id)
+            print(self.request.user.id)
+            client = Clients.objects.get(pk=self.request.user.id)
             form.fields['payment'].queryset = Payment.objects.filter(client=client)
         else:
             form.fields['payment'].queryset = Payment.objects.none()
@@ -51,7 +51,6 @@ class BookingView(DataMixin, FormView):
         context = dict(list(context.items()) + list(c_def.items()))
 
         return context
-
 
 class TourView(DataMixin, DetailView):
     model = Tours
@@ -103,7 +102,6 @@ class TourView(DataMixin, DetailView):
     #         booking.save()
     #         return HttpResponse('good')
     #     return HttpResponse('bad')
-
 
 class HotelView(DataMixin, DetailView):
     model = Hotels
