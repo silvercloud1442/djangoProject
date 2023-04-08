@@ -28,29 +28,50 @@ class BookingView(DataMixin, FormView):
     template_name = 'tours/booking.html'
     success_url = reverse_lazy('index')
 
+    def get_form_kwargs(self, *args, **kwargs):
+        kwargs = super(BookingView, self).get_form_kwargs()
+
+        tour = Tours.objects.get(slug=self.kwargs['tour_slug'])
+        hotel = Hotels.objects.get(tours__slug=tour.slug)
+
+        kwargs['hotel'] = hotel
+        kwargs['tour'] = tour
+
+        if self.request.user.is_authenticated:
+            client = Clients.objects.get(pk=self.request.user.id)
+            kwargs['payment'] = Payment.objects.filter(client=client)
+        else:
+            kwargs['payment'] = Payment.objects.none()
+        return kwargs
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         tour = Tours.objects.get(slug=self.kwargs['tour_slug'])
         hotel = Hotels.objects.get(tours__slug=tour.slug)
 
-        form = BookingForm()
-        form.fields['room'].queryset = Rooms.objects.filter(hotel=hotel)
-        if self.request.user.is_authenticated:
-            print(self.request.user.id)
-            client = Clients.objects.get(pk=self.request.user.id)
-            form.fields['payment'].queryset = Payment.objects.filter(client=client)
-        else:
-            form.fields['payment'].queryset = Payment.objects.none()
+        # form = BookingForm(tour.max_kids, tour.max_adults)
+        # form.fields['room'].queryset = Rooms.objects.filter(hotel=hotel)
+        #
+        # if self.request.user.is_authenticated:
+        #     client = Clients.objects.get(pk=self.request.user.id)
+        #     form.fields['payment'].queryset = Payment.objects.filter(client=client)
+        # else:
+        #     form.fields['payment'].queryset = Payment.objects.none()
+
 
         dop_context = {
             'hotel': hotel,
-            'form': form
         }
+
         c_def = self.get_user_context(**dop_context)
         context = dict(list(context.items()) + list(c_def.items()))
 
         return context
+
+    def from_valid(self, form):
+        form.save()
+        return redirect('index')
 
 class TourView(DataMixin, DetailView):
     model = Tours

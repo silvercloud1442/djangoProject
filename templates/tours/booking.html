@@ -11,6 +11,12 @@
 					<h4>Booking</h4>
 					<p>Don't have an account? Create your account. It's take less then a minutes</p>
 					<form class="s12" method="post">
+
+
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">{{ form.non_field_errors}}</div>
+                        {% endif %}
+
                         {% csrf_token %}
                         {% for f in form %}
                             <div>
@@ -25,16 +31,10 @@
                             </div>
                         {% endfor %}
 
-
 						<div>
 							<div class="input-field s4">
-								<button type="submit" class="btn waves-effect waves-light">Login</button>
+								<button type="submit" class="btn waves-effect waves-light">Book</button>
 						</div>
-
-						<div>
-							<div class="input-field s12"> <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#modal1">Are you a already member ? Login</a> </div>
-						</div>
-
 					</form>
 				</div>
 			</div>

@@ -155,10 +155,10 @@ class Payment(models.Model):
         verbose_name_plural = 'Платежная информация'
 
 class Booking(models.Model):
-    payment_status = models.CharField(max_length=255, verbose_name='Статус опалты')
+    payment_status = models.CharField(max_length=255, verbose_name='Статус опалты', blank=True)
     adults_count = models.IntegerField(validators=[min_valid], verbose_name='Всего взрослых')
     kids_count = models.IntegerField(validators=[min_valid], verbose_name='Всего детей')
-    total_price = models.IntegerField(verbose_name='Общая стоимость')
+    total_price = models.IntegerField(verbose_name='Общая стоимость',)
     tour = models.ForeignKey(to=Tours, on_delete=models.PROTECT, verbose_name='Тур')
     client = models.ForeignKey(to=Clients, on_delete=models.PROTECT, verbose_name='Клиент')
     room = models.ForeignKey(to=Rooms, on_delete=models.PROTECT, verbose_name='Комната')
@@ -169,6 +169,7 @@ class Booking(models.Model):
         self.total_price = tour_price + rooms_price
         self.tour.save()
         super(Booking, self).save(*args, **kwargs)
+        self.save()
 
     class Meta:
         ordering = ['tour']

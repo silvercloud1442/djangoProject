@@ -38,15 +38,18 @@ class RegisterClientForm(forms.ModelForm):
         fields = ('FIO', 'birthday', 'email', 'phone', 'passport_series_number', 'inter_passport_series_number',)
 
 class BookingForm(forms.ModelForm):
-    adults_count = forms.IntegerField(label='Количество взрослых')
-    kids_count = forms.IntegerField(label='Количество детей')
-    room = forms.ModelChoiceField(queryset=Rooms.objects.none(),)
-    payment = forms.ModelChoiceField(queryset=Payment.objects.none(), )
+    adults_count = forms.IntegerField()
+    kids_count = forms.IntegerField()
+    room = forms.ModelChoiceField(label='Комната', queryset=Rooms.objects.none(),)
+    payment = forms.ModelChoiceField(label='Способ оплаты', queryset=Payment.objects.none(), )
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, max_k=1, max_a=1, *args, **kwargs):
         hotel = kwargs.pop('hotel', None)
         payment = kwargs.pop('payment', None)
+        tour = kwargs.pop('tour', None)
         super(BookingForm, self).__init__(*args, **kwargs)
+        self.fields['kids_count'] = forms.IntegerField(max_value=tour.max_kids, label='Количество детей', min_value=0, initial=0)
+        self.fields['adults_count'] = forms.IntegerField(max_value=tour.max_adults, label='Количество взрослых', min_value=0, initial=0)
 
         if payment:
             self.fields['payment'].queryset = payment
@@ -57,4 +60,4 @@ class BookingForm(forms.ModelForm):
 
     class Meta:
         model = Booking
-        fields = ('adults_count', 'kids_count', 'room')
+        fields = ('adults_count', 'kids_count', 'room', 'payment')
