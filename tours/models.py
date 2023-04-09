@@ -164,12 +164,10 @@ class Booking(models.Model):
     room = models.ForeignKey(to=Rooms, on_delete=models.PROTECT, verbose_name='Комната')
 
     def save(self, *args, **kwargs):
-        tour_price = self.tour.base_price
+        tour_price = self.total_price
         rooms_price = self.room.add_price
         self.total_price = tour_price + rooms_price
-        self.tour.save()
         super(Booking, self).save(*args, **kwargs)
-        self.save()
 
     class Meta:
         ordering = ['tour']

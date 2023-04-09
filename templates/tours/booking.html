@@ -11,14 +11,12 @@
 					<h4>Booking</h4>
 					<p>Don't have an account? Create your account. It's take less then a minutes</p>
 					<form class="s12" method="post">
-
-
                         {% if form.non_field_errors %}
                             <div class="alert alert-danger">{{ form.non_field_errors}}</div>
                         {% endif %}
 
                         {% csrf_token %}
-                        {% for f in form %}
+                        {% for f in form.visible_fields %}
                             <div>
                                 <h5>{{ f.label }}</h5>
                                 <div class="input-field s12">
@@ -30,6 +28,11 @@
 
                             </div>
                         {% endfor %}
+                        {% for f in form.hidden_fields %}
+                            {{ f }}
+                            {{ f.errors }}
+                        {% endfor %}
+
 
 						<div>
 							<div class="input-field s4">

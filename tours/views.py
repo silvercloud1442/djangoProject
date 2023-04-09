@@ -23,7 +23,7 @@ class IndexPage(DataMixin, TemplateView):
         context = dict(list(context.items()) + list(c_def.items()))
         return context
 
-class BookingView(DataMixin, FormView):
+class BookingView(DataMixin, CreateView):
     form_class = BookingForm
     template_name = 'tours/booking.html'
     success_url = reverse_lazy('index')
@@ -36,6 +36,8 @@ class BookingView(DataMixin, FormView):
 
         kwargs['hotel'] = hotel
         kwargs['tour'] = tour
+        user = User.objects.get(pk=self.request.user.id)
+        kwargs['client'] = Clients.objects.get(user=user)
 
         if self.request.user.is_authenticated:
             client = Clients.objects.get(pk=self.request.user.id)

@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 
-from tours.models import Clients, Booking, Rooms, Payment
+from tours.models import *
 
 
 class DateInput(forms.DateInput):
@@ -41,23 +41,48 @@ class BookingForm(forms.ModelForm):
     adults_count = forms.IntegerField()
     kids_count = forms.IntegerField()
     room = forms.ModelChoiceField(label='Комната', queryset=Rooms.objects.none(),)
-    payment = forms.ModelChoiceField(label='Способ оплаты', queryset=Payment.objects.none(), )
+    payment = forms.ModelChoiceField(label='Способ оплаты', queryset=Payment.objects.none(),)
+
+    client = forms.ModelChoiceField(queryset=Clients.objects.none(), widget=forms.HiddenInput(), required=False)
+    tour = forms.ModelChoiceField(queryset=Tours.objects.none(), widget=forms.HiddenInput(), required=False)
+    total_price = forms.IntegerField(widget=forms.HiddenInput(), required=False)
+    payment_status = forms.CharField(widget=forms.HiddenInput(), required=False)
+
+
 
     def __init__(self, max_k=1, max_a=1, *args, **kwargs):
         hotel = kwargs.pop('hotel', None)
         payment = kwargs.pop('payment', None)
-        tour = kwargs.pop('tour', None)
+        self.tour_inp = kwargs.pop('tour', None)
+        self.client_inp = kwargs.pop('client', None)
+        self.bp = self.tour_inp.base_price
+        rooms = Rooms.objects.filter(hotel=hotel)
+
         super(BookingForm, self).__init__(*args, **kwargs)
-        self.fields['kids_count'] = forms.IntegerField(max_value=tour.max_kids, label='Количество детей', min_value=0, initial=0)
-        self.fields['adults_count'] = forms.IntegerField(max_value=tour.max_adults, label='Количество взрослых', min_value=0, initial=0)
+        self.fields['kids_count'] = forms.IntegerField(max_value=self.tour_inp.max_kids, label='Количество детей', min_value=0, initial=0)
+        self.fields['adults_count'] = forms.IntegerField(max_value=self.tour_inp.max_adults, label='Количество взрослых', min_value=0, initial=0)
+        self.fields['payment'].queryset = payment
+        self.fields['room'].queryset = rooms
 
-        if payment:
-            self.fields['payment'].queryset = payment
+    def clean_client(self):
+        return self.client_inp
 
-        if hotel:
-            self.fields['room'].queryset = Rooms.objects.filter(hotel=hotel)
+    def clean_tour(self):
+        return self.tour_inp
+
+    def clean_total_price(self):
+        return self.bp
+
+    def clean_payment_status(self):
+        return 'оплачен'
+
+
+        # self.cleaned_data['client'] = client
+        # self.fields['tour'].value = tour
+        # self.fields['payment_status'].value = 'Оплачен'
+        # self.fields['total_price'].value = tour.base_price
 
 
     class Meta:
         model = Booking
-        fields = ('adults_count', 'kids_count', 'room', 'payment')
+        fields = ('adults_count', 'kids_count', 'room', 'payment', 'client', 'tour', 'total_price', 'payment_status')
