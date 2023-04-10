@@ -158,7 +158,7 @@ class Payment(models.Model):
         verbose_name_plural = 'Платежная информация'
 
 class Booking(models.Model):
-    payment_status = models.CharField(max_length=255, verbose_name='Статус опалты', blank=True)
+    payment = models.ForeignKey(to=Payment, max_length=255, verbose_name='Статус опалты', blank=True, null=True, on_delete=models.SET_NULL)
     adults_count = models.IntegerField(validators=[min_valid], verbose_name='Всего взрослых')
     kids_count = models.IntegerField(validators=[min_valid], verbose_name='Всего детей')
     total_price = models.IntegerField(verbose_name='Общая стоимость',)

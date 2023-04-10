@@ -63,8 +63,8 @@ class PaymentAdmin(admin.ModelAdmin):
     save_on_top = True
 
 class BookingAdmin(admin.ModelAdmin):
-    list_display = ('payment_status', 'adults_count', 'kids_count', 'total_price', 'tour', 'client', 'room')
-    list_display_links = ('payment_status',)
+    list_display = ('payment', 'adults_count', 'kids_count', 'total_price', 'tour', 'client', 'room')
+    list_display_links = ('payment',)
     readonly_fields = ('total_price',)
     save_on_top = True
 

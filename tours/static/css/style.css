@@ -1725,17 +1725,17 @@ td {} .inn-com p {} .inn-com-form {} .inn-com-form form {
 }
 .db-left {
     float: left;
-    width: 30%;
+    width: 25%;
     /* background: linear-gradient(to top, #3a5b63 14%, #375874 66%); */
 }
 .db-cent {
     float: left;
-    width: 50%;
+    width: 60%;
     background: #fff;
 }
 .db-righ {
     float: left;
-    width: 20%;
+    width: 15%;
 }
 .db-left-1 {
     padding: 116px 50px 30px 50px;

@@ -2345,7 +2345,7 @@ td,
 th {
     padding: 15px 5px;
     display: table-cell;
-    text-align: left;
+    text-align: center;
     vertical-align: middle;
     border-radius: 2px;
 }
@@ -2398,7 +2398,7 @@ th {
     table.responsive-table td {
         display: block;
         min-height: 1.25em;
-        text-align: left;
+        text-align: center;
     }
     table.responsive-table tr {
         padding: 0 10px;

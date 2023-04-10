@@ -194,21 +194,43 @@ class ProfileView(DataMixin, CreateView):
     template_name = 'tours/profile.html'
     success_url = reverse_lazy('index')
 
-    # def get_form_kwargs(self, *args, **kwargs):
-    #     kwargs = super(ProfileView, self).get_form_kwargs()
-    #     user = User.objects.get(pk=self.request.user.id)
-    #     kwargs['client'] = Clients.objects.get(user=user)
-    #
-    #     return kwargs
+    def get_form_kwargs(self, *args, **kwargs):
+        kwargs = super(ProfileView, self).get_form_kwargs()
+        user = User.objects.get(pk=self.request.user.id)
+        kwargs['client'] = Clients.objects.get(user=user)
+
+        return kwargs
+
+    def get_queryset(self):
+        return Booking.objects.filter(client__user_id=self.request.user.id).\
+                                    select_related('tour').\
+                                    select_related('transit').\
+                                    select_related('payment')
 
     def get_context_data(self, **kwargs):
         context = super(ProfileView, self).get_context_data(**kwargs)
+        tours = Tours.objects.all()
+        transit = Transit.objects.all()
+        payment = Payment.objects.all()
 
         client = get_object_or_404(Clients, pk=self.kwargs['client_id'])
         bookings = Booking.objects.filter(client=client)
+        context_bookings = []
+        for book in bookings:
+            tour = tours.get(id=book.tour.id)
+            added = []
+            added.append(tour)
+            added.append(book.adults_count + book.kids_count)
+            added.append(book.payment)
+            added.append(book.total_price)
+            added.append(transit.get(id=tour.transit_in.id))
+            added.append(transit.get(id=tour.transit_back.id))
+            context_bookings.append(added)
+
+        print(context_bookings)
 
         dop_context = {
-            'bookings': bookings
+            'bookings': context_bookings
         }
         c_def = self.get_user_context(**dop_context)
         context = dict(list(context.items()) + list(c_def.items()))

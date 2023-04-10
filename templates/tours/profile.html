@@ -61,7 +61,6 @@
 			    </div>
             </div>
         </div>
-    </div>
         <div class="db-cent">
             <div class="db-cent-1">
                 <p>Hi Jana Novakova,</p>
@@ -75,28 +74,25 @@
                     <table class="bordered responsive-table">
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Name</th>
-                                <th>Phone</th>
-                                <th>City</th>
-                                <th>Arrival</th>
-                                <th>Departure</th>
-                                <th>Members</th>
-                                <th>Payment</th>
+                                <th>Тур</th>
+                                <th>Число клиентов</th>
+                                <th>Способ оплаты</th>
+                                <th>Общая стоимость</th>
+                                <th>Дата отправления</th>
+                                <th>Дата возврата</th>
                             </tr>
                         </thead>
                         <tbody>
+                            {% for book in bookings %}
                             <tr>
-                                <td>01</td>
-                                <td>Alvin</td>
-                                <td>+01 4215 3521</td>
-                                <td><span class="db-tab-hi">New york,</span>USA</td>
-                                <td>12may</td>
-                                <td>20may</td>
-                                <td>12</td>
-                                <td><a href="#" class="db-success">Success</a>
-                                </td>
+                                <td>{{ book.0|truncatechars:20 }}</td>
+                                <td>{{ book.1 }}</td>
+                                <td>{{ book.2 }}</td>
+                                <td>{{ book.3 }}</td>
+                                <td>{{ book.4 }}</td>
+                                <td>{{ book.5 }}</td>
                             </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
