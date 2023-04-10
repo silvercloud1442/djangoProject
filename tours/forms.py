@@ -64,6 +64,16 @@ class BookingForm(forms.ModelForm):
         self.fields['payment'].queryset = payment
         self.fields['room'].queryset = rooms
 
+    def clean(self):
+        clean_data = super().clean()
+        c_k = clean_data.get('kids_count')
+        c_a = clean_data.get('adults_count')
+
+        if c_a + c_k == 0:
+            raise ValidationError('Неверное число клиентов')
+
+
+
     def clean_client(self):
         return self.client_inp
 
