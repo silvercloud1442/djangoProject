@@ -1,0 +1,121 @@
+{% extends 'tours/base.html' %}
+{% load static %}
+{% block content %}
+<style>
+.log-in-pop {
+    position: relative;
+    overflow: hidden;
+    /* height: 100%; */
+    /* bottom: 0px; */
+    background: #fff;
+    width: 85%;
+    margin: 0 auto;
+    margin-top: 5%;
+}
+</style>
+
+    <!--DASHBOARD SECTION-->
+    <div class="dashboard">
+        <div class="db-left">
+            <div class="db-left-1">
+                <h4>Jana Novakova</h4>
+                <p>Newyork, United States</p>
+            </div>
+            <div class="db-left-2">
+               <div class="log-in-pop">
+                    <div class="log-in-pop-right">
+                        <a href="#" class="pop-close" data-dismiss="modal"><img src="{% static 'images/cancel.png' %}" alt="" />
+                        </a>
+                        <h4>Login</h4>
+                        <p>Don't have an account? Create your account. It's take less then a minutes</p>
+                        <form class="s12" method="post">
+    {#                        {% if form.non_field_errors %}#}
+    {#                            <div class="alert alert-danger">{{ form.non_field_errors}}</div>#}
+    {#                        {% endif %}#}
+
+                            {% csrf_token %}
+                            {% for f in form.visible_fields %}
+                                <div>
+                                    <h5>{{ f.label }}</h5>
+                                    <div class="input-field s12">
+                                        {{ f }}
+                                        {% if f.errors %}
+                                            <div class="alert alert-danger">{{ f.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                          {% for f in form.hidden_fields %}
+                              {{ f }}
+                              {{ f.errors }}
+                          {% endfor %}
+
+
+                            <div>
+                                <div class="input-field s4">
+                                    <button type="submit" class="btn waves-effect waves-light">Book</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+			    </div>
+            </div>
+        </div>
+    </div>
+        <div class="db-cent">
+            <div class="db-cent-1">
+                <p>Hi Jana Novakova,</p>
+                <h4>Welcome to your dashboard</h4> </div>
+            <div class="db-cent-3">
+                <div class="db-cent-table db-com-table">
+                    <div class="db-title">
+                        <h3><img src="images/icon/dbc6.png" alt=""/> My Events</h3>
+                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form</p>
+                    </div>
+                    <table class="bordered responsive-table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>City</th>
+                                <th>Arrival</th>
+                                <th>Departure</th>
+                                <th>Members</th>
+                                <th>Payment</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>01</td>
+                                <td>Alvin</td>
+                                <td>+01 4215 3521</td>
+                                <td><span class="db-tab-hi">New york,</span>USA</td>
+                                <td>12may</td>
+                                <td>20may</td>
+                                <td>12</td>
+                                <td><a href="#" class="db-success">Success</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="db-righ">
+            <h4>Notifications(18)</h4>
+            <ul>
+                <li>
+                    <a href="#!"> <img src="images/icon/dbr1.jpg" alt="">
+                        <h5>Joseph, write a review</h5>
+                        <p>All the Lorem Ipsum generators on the</p> <span>2 hours ago</span> </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--END DASHBOARD SECTION-->
+    <!--TOP SECTION-->
+
+
+{% endblock %}

@@ -6,6 +6,10 @@ from django.dispatch import receiver
 
 from tours.utils import *
 
+payment_systems = (('Visa', 'Visa'),
+                   ('MasterCard', 'MasterCard'),
+                   ('МИР', 'МИР'))
+
 def hotel_photo_location(self, filename):
     return 'hotels/{}/{}'.format(self.hotel.slug, filename)
 
@@ -140,14 +144,13 @@ class Clients(models.Model):
 #     instance.clients.save()
 
 class Payment(models.Model):
-    payment_system = models.CharField(max_length=30, verbose_name='Система оплаты')
+    payment_system = models.CharField(max_length=30, verbose_name='Система оплаты', choices=payment_systems)
     card_number = models.CharField(validators=[car_number_valid], max_length=20, verbose_name='Номер карта')
     card_date = models.DateField(validators=[date_valid], verbose_name='Срок карты')
     client = models.ForeignKey(to=Clients, on_delete=models.CASCADE, verbose_name='Клиент')
 
     def __str__(self):
         return self.payment_system + " : " + self.card_number
-
 
     class Meta:
         ordering = ['client']

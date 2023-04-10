@@ -1721,16 +1721,16 @@ td {} .inn-com p {} .inn-com-form {} .inn-com-form form {
     overflow: hidden;
     margin-top: 72px;
     margin-bottom: 55px;
-    background: linear-gradient(to top, #273237 14%, #f3354e 66%);
+    background: linear-gradient(to top, #273237 14%, #46bb0cb3 66%);
 }
 .db-left {
     float: left;
-    width: 20%;
+    width: 30%;
     /* background: linear-gradient(to top, #3a5b63 14%, #375874 66%); */
 }
 .db-cent {
     float: left;
-    width: 60%;
+    width: 50%;
     background: #fff;
 }
 .db-righ {

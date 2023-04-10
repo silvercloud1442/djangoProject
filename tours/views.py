@@ -1,7 +1,7 @@
 from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, DetailView, ListView, CreateView, FormView
 
@@ -22,58 +22,6 @@ class IndexPage(DataMixin, TemplateView):
 
         context = dict(list(context.items()) + list(c_def.items()))
         return context
-
-class BookingView(DataMixin, CreateView):
-    form_class = BookingForm
-    template_name = 'tours/booking.html'
-    success_url = reverse_lazy('index')
-
-    def get_form_kwargs(self, *args, **kwargs):
-        kwargs = super(BookingView, self).get_form_kwargs()
-
-        tour = Tours.objects.get(slug=self.kwargs['tour_slug'])
-        hotel = Hotels.objects.get(tours__slug=tour.slug)
-
-        kwargs['hotel'] = hotel
-        kwargs['tour'] = tour
-        user = User.objects.get(pk=self.request.user.id)
-        kwargs['client'] = Clients.objects.get(user=user)
-
-        if self.request.user.is_authenticated:
-            client = Clients.objects.get(pk=self.request.user.id)
-            kwargs['payment'] = Payment.objects.filter(client=client)
-        else:
-            kwargs['payment'] = Payment.objects.none()
-        return kwargs
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        tour = Tours.objects.get(slug=self.kwargs['tour_slug'])
-        hotel = Hotels.objects.get(tours__slug=tour.slug)
-
-        # form = BookingForm(tour.max_kids, tour.max_adults)
-        # form.fields['room'].queryset = Rooms.objects.filter(hotel=hotel)
-        #
-        # if self.request.user.is_authenticated:
-        #     client = Clients.objects.get(pk=self.request.user.id)
-        #     form.fields['payment'].queryset = Payment.objects.filter(client=client)
-        # else:
-        #     form.fields['payment'].queryset = Payment.objects.none()
-
-
-        dop_context = {
-            'hotel': hotel,
-        }
-
-        c_def = self.get_user_context(**dop_context)
-        context = dict(list(context.items()) + list(c_def.items()))
-
-        return context
-
-    def from_valid(self, form):
-        form.save()
-        return redirect('index')
 
 class TourView(DataMixin, DetailView):
     model = Tours
@@ -198,6 +146,79 @@ class LoginUserView(DataMixin, LoginView):
 
     def get_success_url(self):
         return reverse_lazy('index')
+    
+class BookingView(DataMixin, CreateView):
+    form_class = BookingForm
+    template_name = 'tours/booking.html'
+    success_url = reverse_lazy('index')
+
+    def get_form_kwargs(self, *args, **kwargs):
+        kwargs = super(BookingView, self).get_form_kwargs()
+
+        tour = Tours.objects.get(slug=self.kwargs['tour_slug'])
+        hotel = Hotels.objects.get(tours__slug=tour.slug)
+
+        kwargs['hotel'] = hotel
+        kwargs['tour'] = tour
+        user = User.objects.get(pk=self.request.user.id)
+        kwargs['client'] = Clients.objects.get(user=user)
+
+        if self.request.user.is_authenticated:
+            client = Clients.objects.get(pk=self.request.user.id)
+            kwargs['payment'] = Payment.objects.filter(client=client)
+        else:
+            kwargs['payment'] = Payment.objects.none()
+        return kwargs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        tour = Tours.objects.get(slug=self.kwargs['tour_slug'])
+        hotel = Hotels.objects.get(tours__slug=tour.slug)
+
+        dop_context = {
+            'hotel': hotel,
+        }
+
+        c_def = self.get_user_context(**dop_context)
+        context = dict(list(context.items()) + list(c_def.items()))
+
+        return context
+
+    def from_valid(self, form):
+        form.save()
+        return redirect('index')
+    
+class ProfileView(DataMixin, CreateView):
+    form_class = PaymentForm
+    template_name = 'tours/profile.html'
+    success_url = reverse_lazy('index')
+
+    # def get_form_kwargs(self, *args, **kwargs):
+    #     kwargs = super(ProfileView, self).get_form_kwargs()
+    #     user = User.objects.get(pk=self.request.user.id)
+    #     kwargs['client'] = Clients.objects.get(user=user)
+    #
+    #     return kwargs
+
+    def get_context_data(self, **kwargs):
+        context = super(ProfileView, self).get_context_data(**kwargs)
+
+        client = get_object_or_404(Clients, pk=self.kwargs['client_id'])
+        bookings = Booking.objects.filter(client=client)
+
+        dop_context = {
+            'bookings': bookings
+        }
+        c_def = self.get_user_context(**dop_context)
+        context = dict(list(context.items()) + list(c_def.items()))
+
+        return context
+
+    def form_valid(self, form):
+        form.save()
+        return redirect('index')
+
 
 @csrf_exempt
 def register(request):
@@ -218,6 +239,9 @@ def register(request):
         'client': client_form
     }
     return render(request, 'tours/register.html', context=context)
+
+# def profile_view(request):
+#     return render(request, 'tours/profile.html')
 
 def logout_user(request):
     logout(request)

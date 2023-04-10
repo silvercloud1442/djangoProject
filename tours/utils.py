@@ -18,7 +18,6 @@ class DataMixin:
 
         return context
 
-
 def min_valid(value):
     if value:
         if value < 0:
@@ -28,7 +27,7 @@ def date_valid(date_in):
     if date_in:
         td = date.today()
         if date_in < td:
-            raise  ValidationError('Некорректная дата')
+            raise ValidationError('Некорректная дата')
 
 def car_number_valid(number):
     if len(number) != 16:

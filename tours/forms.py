@@ -1,8 +1,13 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
+from creditcards.forms import CardNumberField, CardExpiryField
 
 from tours.models import *
+
+payment_systems = (('Visa', 'Visa'),
+                   ('MasterCard', 'MasterCard'),
+                   ('МИР', 'МИР'))
 
 
 class DateInput(forms.DateInput):
@@ -10,7 +15,6 @@ class DateInput(forms.DateInput):
 
 class PasswordInput(forms.PasswordInput):
     input_type = "password"
-
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(label='Username')
@@ -48,9 +52,7 @@ class BookingForm(forms.ModelForm):
     total_price = forms.IntegerField(widget=forms.HiddenInput(), required=False)
     payment_status = forms.CharField(widget=forms.HiddenInput(), required=False)
 
-
-
-    def __init__(self, max_k=1, max_a=1, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         hotel = kwargs.pop('hotel', None)
         payment = kwargs.pop('payment', None)
         self.tour_inp = kwargs.pop('tour', None)
@@ -72,8 +74,6 @@ class BookingForm(forms.ModelForm):
         if c_a + c_k == 0:
             raise ValidationError('Неверное число клиентов')
 
-
-
     def clean_client(self):
         return self.client_inp
 
@@ -86,13 +86,24 @@ class BookingForm(forms.ModelForm):
     def clean_payment_status(self):
         return 'оплачен'
 
-
-        # self.cleaned_data['client'] = client
-        # self.fields['tour'].value = tour
-        # self.fields['payment_status'].value = 'Оплачен'
-        # self.fields['total_price'].value = tour.base_price
-
-
     class Meta:
         model = Booking
         fields = ('adults_count', 'kids_count', 'room', 'payment', 'client', 'tour', 'total_price', 'payment_status')
+
+class PaymentForm(forms.ModelForm):
+    payment_system = forms.ChoiceField(choices=payment_systems, label='Платежная система')
+    card_number = forms.CharField(label='Номер карты')
+    card_date = forms.DateField(label='Срок действия', widget=DateInput)
+
+    client = forms.ModelChoiceField(queryset=Clients.objects.none(), widget=forms.HiddenInput(), required=False)
+
+    def __init__(self, *args, **kwargs):
+        self.client_inp = kwargs.pop('client', None)
+        super(PaymentForm, self).__init__(*args, **kwargs)
+    #
+    def clean_client(self):
+        return self.client_inp
+
+    class Meta:
+        model = Payment
+        fields = ('payment_system', 'card_number', 'card_date', 'client')
