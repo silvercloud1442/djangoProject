@@ -16,17 +16,28 @@
 
     <!--DASHBOARD SECTION-->
     <div class="dashboard">
+        <div class="db-cent-1">
+                <p>Hi Jana Novakova,</p>
+                <h4>Welcome to your dashboard</h4> </div>
+        <div class="db-righ">
+            <h4>My payments</h4>
+            <ul>
+                {% for payment in payments %}
+                    <li>{{ payment }}</li>
+                {% endfor %}
+            </ul>
+        </div>
         <div class="db-left">
-            <div class="db-left-1">
-                <h4>Jana Novakova</h4>
-                <p>Newyork, United States</p>
-            </div>
+<!--            <div class="db-left-1">-->
+<!--                <h4>Jana Novakova</h4>-->
+<!--                <p>Newyork, United States</p>-->
+<!--            </div>-->
             <div class="db-left-2">
                <div class="log-in-pop">
                     <div class="log-in-pop-right">
                         <a href="#" class="pop-close" data-dismiss="modal"><img src="{% static 'images/cancel.png' %}" alt="" />
                         </a>
-                        <h4>Login</h4>
+                        <h4>Add payment</h4>
                         <p>Don't have an account? Create your account. It's take less then a minutes</p>
                         <form class="s12" method="post">
     {#                        {% if form.non_field_errors %}#}
@@ -40,7 +51,9 @@
                                     <div class="input-field s12">
                                         {{ f }}
                                         {% if f.errors %}
-                                            <div class="alert alert-danger">{{ f.errors }}</div>
+                                            {% for error in f.errors %}
+                                                <div class="alert alert-danger">{{ error }}</div>
+                                            {% endfor %}
                                         {% endif %}
                                     </div>
                                 </div>
@@ -62,9 +75,6 @@
             </div>
         </div>
         <div class="db-cent">
-            <div class="db-cent-1">
-                <p>Hi Jana Novakova,</p>
-                <h4>Welcome to your dashboard</h4> </div>
             <div class="db-cent-3">
                 <div class="db-cent-table db-com-table">
                     <div class="db-title">
@@ -85,7 +95,7 @@
                         <tbody>
                             {% for book in bookings %}
                             <tr>
-                                <td>{{ book.0|truncatechars:20 }}</td>
+                                <td><a href="{{book.0.get_absolute_url}}">{{ book.0|truncatechars:20 }}</a></td>
                                 <td>{{ book.1 }}</td>
                                 <td>{{ book.2 }}</td>
                                 <td>{{ book.3 }}</td>
@@ -97,17 +107,6 @@
                     </table>
                 </div>
             </div>
-        </div>
-
-        <div class="db-righ">
-            <h4>Notifications(18)</h4>
-            <ul>
-                <li>
-                    <a href="#!"> <img src="images/icon/dbr1.jpg" alt="">
-                        <h5>Joseph, write a review</h5>
-                        <p>All the Lorem Ipsum generators on the</p> <span>2 hours ago</span> </a>
-                </li>
-            </ul>
         </div>
     </div>
     <!--END DASHBOARD SECTION-->

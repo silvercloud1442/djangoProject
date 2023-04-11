@@ -1,7 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
-from creditcards.forms import CardNumberField, CardExpiryField
 
 from tours.models import *
 
@@ -92,8 +91,8 @@ class BookingForm(forms.ModelForm):
 
 class PaymentForm(forms.ModelForm):
     payment_system = forms.ChoiceField(choices=payment_systems, label='Платежная система')
-    card_number = forms.CharField(label='Номер карты')
-    card_date = forms.DateField(label='Срок действия', widget=DateInput)
+    card_number = forms.CharField(label='Номер карты', validators=[car_number_valid])
+    card_date = forms.DateField(label='Срок действия', widget=DateInput, validators=[date_valid])
 
     client = forms.ModelChoiceField(queryset=Clients.objects.none(), widget=forms.HiddenInput(), required=False)
 

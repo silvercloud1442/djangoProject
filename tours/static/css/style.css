@@ -202,8 +202,14 @@ th {
 .top-bar ul li a img {
     width: 18px;
 }
+
+.left {
+    text-align: left;
+}
+
+
 .menu-section {
-    padding: 10px 0px;
+    padding: 25px 0px;
     background: #2a2b33;
     box-shadow: 0px 1px 20px rgba(0, 0, 0, 0.52);
     position: fixed;
@@ -214,6 +220,7 @@ th {
 .logo {
     float: left;
     width: 20%;
+    margin-top: 10px;
 }
 .logo img {} .menu-bar {
     float: left;
@@ -230,7 +237,7 @@ th {
 }
 .menu-bar ul li a {
     color: #cbcbcb;
-    font-size: 13px;
+    font-size: 17px;
     padding: 10px 15px;
     /* text-transform: uppercase; */
     
@@ -1721,7 +1728,7 @@ td {} .inn-com p {} .inn-com-form {} .inn-com-form form {
     overflow: hidden;
     margin-top: 72px;
     margin-bottom: 55px;
-    background: linear-gradient(to top, #273237 14%, #46bb0cb3 66%);
+    background: linear-gradient(to top, #273237 14%, #9ed948b3  66%);
 }
 .db-left {
     float: left;

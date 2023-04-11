@@ -211,10 +211,11 @@ class ProfileView(DataMixin, CreateView):
         context = super(ProfileView, self).get_context_data(**kwargs)
         tours = Tours.objects.all()
         transit = Transit.objects.all()
-        payment = Payment.objects.all()
-
-        client = get_object_or_404(Clients, pk=self.kwargs['client_id'])
+        user = User.objects.get(pk=self.kwargs['user_id'])
+        client = get_object_or_404(Clients, user=user)
+        payments = Payment.objects.filter(client=client)
         bookings = Booking.objects.filter(client=client)
+
         context_bookings = []
         for book in bookings:
             tour = tours.get(id=book.tour.id)
@@ -226,11 +227,9 @@ class ProfileView(DataMixin, CreateView):
             added.append(transit.get(id=tour.transit_in.id))
             added.append(transit.get(id=tour.transit_back.id))
             context_bookings.append(added)
-
-        print(context_bookings)
-
         dop_context = {
-            'bookings': context_bookings
+            'bookings': context_bookings,
+            'payments': payments
         }
         c_def = self.get_user_context(**dop_context)
         context = dict(list(context.items()) + list(c_def.items()))
@@ -239,7 +238,8 @@ class ProfileView(DataMixin, CreateView):
 
     def form_valid(self, form):
         form.save()
-        return redirect('index')
+        user = User.objects.get(pk=self.kwargs['user_id'])
+        return redirect('profile', user_id=user.id)
 
 
 @csrf_exempt
