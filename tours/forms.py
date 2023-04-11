@@ -8,7 +8,6 @@ payment_systems = (('Visa', 'Visa'),
                    ('MasterCard', 'MasterCard'),
                    ('МИР', 'МИР'))
 
-
 class DateInput(forms.DateInput):
     input_type = "date"
 
@@ -41,10 +40,10 @@ class RegisterClientForm(forms.ModelForm):
         fields = ('FIO', 'birthday', 'email', 'phone', 'passport_series_number', 'inter_passport_series_number',)
 
 class BookingForm(forms.ModelForm):
+    room = forms.ModelChoiceField(label='Комната', queryset=Rooms.objects.none(), )
+    payment = forms.ModelChoiceField(label='Способ оплаты', queryset=Payment.objects.none(), )
     adults_count = forms.IntegerField()
     kids_count = forms.IntegerField()
-    room = forms.ModelChoiceField(label='Комната', queryset=Rooms.objects.none(),)
-    payment = forms.ModelChoiceField(label='Способ оплаты', queryset=Payment.objects.none(),)
 
     client = forms.ModelChoiceField(queryset=Clients.objects.none(), widget=forms.HiddenInput(), required=False)
     tour = forms.ModelChoiceField(queryset=Tours.objects.none(), widget=forms.HiddenInput(), required=False)
@@ -60,10 +59,11 @@ class BookingForm(forms.ModelForm):
         rooms = Rooms.objects.filter(hotel=hotel)
 
         super(BookingForm, self).__init__(*args, **kwargs)
-        self.fields['kids_count'] = forms.IntegerField(max_value=self.tour_inp.max_kids, label='Количество детей', min_value=0, initial=0)
-        self.fields['adults_count'] = forms.IntegerField(max_value=self.tour_inp.max_adults, label='Количество взрослых', min_value=0, initial=0)
         self.fields['payment'].queryset = payment
         self.fields['room'].queryset = rooms
+        self.fields['kids_count'] = forms.IntegerField(max_value=self.tour_inp.max_kids, label='Количество детей', min_value=0, initial=0)
+        self.fields['adults_count'] = forms.IntegerField(max_value=self.tour_inp.max_adults, label='Количество взрослых', min_value=0, initial=0)
+
 
     def clean(self):
         clean_data = super().clean()
@@ -87,7 +87,7 @@ class BookingForm(forms.ModelForm):
 
     class Meta:
         model = Booking
-        fields = ('adults_count', 'kids_count', 'room', 'payment', 'client', 'tour', 'total_price', 'payment_status')
+        fields = ('room', 'payment', 'adults_count', 'kids_count',  'client', 'tour', 'total_price', 'payment_status')
 
 class PaymentForm(forms.ModelForm):
     payment_system = forms.ChoiceField(choices=payment_systems, label='Платежная система')

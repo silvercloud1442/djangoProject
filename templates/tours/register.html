@@ -19,13 +19,11 @@
 			<div class="log-in-pop">
 
 				<div class="log-in-pop-right">
-					<a href="#" class="pop-close" data-dismiss="modal"><img src="{% static 'images/cancel.png' %}" alt="" />
-					</a>
 					<h4>Create an Account</h4>
 					<p>Don't have an account? Create your account. It's take less then a minutes</p>
 					<form class="s12" method="post">
 
-                        {% for f in form %}
+                        {% for f in user %}
                             <div>
                                 <h5>{{ f.label }}</h5>
                                 <div class="input-field s12">
@@ -38,7 +36,7 @@
                             </div>
                         {% endfor %}
 
-                        {% for f in client_form %}
+                        {% for f in client %}
                             <div>
                                 <h5>{{ f.label }}</h5>
     							<div class="input-field s12">

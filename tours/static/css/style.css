@@ -171,12 +171,52 @@ th {
 /*-------------------------------------------------*/
 
 .main {
-    background: url(../images/slide2.jpg) no-repeat;
+    background: url(../images/slide3.jpg) no-repeat;
     background-attachment: fixed;
     background-size: cover;
     width: 100%;
     height: 100%;
 }
+.log_sec {
+    background: url(../images/slide1.jpg) no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.book_sec {
+    background: url(../images/slide2.jpg) no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.profile_sec {
+    background: url(../images/slide4.jpg) no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.reg_sec {
+    background: url(../images/slide3.jpg) no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
 .top-section {
     background: rgba(0, 0, 0, 0.67);
     padding: 5px 0px;
@@ -283,7 +323,7 @@ th {
     font-size: 26px;
     margin-bottom: 0px;
     font-weight: 600;
-    color: #000;
+    color: #fff;
 }
 .home-bod-1 h4 span {
     color: #f4364f;
@@ -295,11 +335,11 @@ th {
     font-size: 54px;
     margin-top: 20px;
     margin-bottom: 20px;
-    color: #000;
+    color: #fff;
 }
 .home-bod-1 p {
     font-size: 15px;
-    color: #000;
+    color: #fff;
 }
 .home-bod-2 {} .home-bod-2 ul {
     margin-bottom: 0px;
@@ -937,7 +977,7 @@ td {} .inn-com p {} .inn-com-form {} .inn-com-form form {
 /*-------------------------------------------------*/
 
 .inn-booking {
-    background: url(../images/slide2.jpg) no-repeat;
+    background: url(../images/slide3.jpg) no-repeat;
     background-attachment: fixed;
     background-size: cover;
     width: 100%;
@@ -1728,7 +1768,6 @@ td {} .inn-com p {} .inn-com-form {} .inn-com-form form {
     overflow: hidden;
     margin-top: 72px;
     margin-bottom: 55px;
-    background: linear-gradient(to top, #273237 14%, #9ed948b3  66%);
 }
 .db-left {
     float: left;
@@ -1883,14 +1922,14 @@ td {} .inn-com p {} .inn-com-form {} .inn-com-form form {
 }
 .db-cent-1 {
     padding: 116px 50px 30px 50px;
-    background: url(../images/slide2.jpg) no-repeat center center;
+    background: url(../images/slide3.jpg) no-repeat center center;
     background-size: cover;
     position: relative;
 }
 .db-cent-1:before {
     content: '';
     position: absolute;
-    background: linear-gradient(to top, rgba(18, 20, 22, 0.81) 14%, rgba(0, 0, 0, 0.55) 66%);
+    background: linear-gradient(to top, rgba(18, 20, 22, 0.81) 14%, rgba(0, 0, 0, 0.05) 66%);
     top: 0px;
     bottom: 0px;
     left: 0px;

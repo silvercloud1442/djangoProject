@@ -10,15 +10,11 @@
     background: #fff;
     width: 85%;
     margin: 0 auto;
-    margin-top: 5%;
 }
 </style>
 
     <!--DASHBOARD SECTION-->
     <div class="dashboard">
-        <div class="db-cent-1">
-                <p>Hi Jana Novakova,</p>
-                <h4>Welcome to your dashboard</h4> </div>
         <div class="db-righ">
             <h4>My payments</h4>
             <ul>
@@ -35,14 +31,12 @@
             <div class="db-left-2">
                <div class="log-in-pop">
                     <div class="log-in-pop-right">
-                        <a href="#" class="pop-close" data-dismiss="modal"><img src="{% static 'images/cancel.png' %}" alt="" />
-                        </a>
                         <h4>Add payment</h4>
                         <p>Don't have an account? Create your account. It's take less then a minutes</p>
                         <form class="s12" method="post">
-    {#                        {% if form.non_field_errors %}#}
-    {#                            <div class="alert alert-danger">{{ form.non_field_errors}}</div>#}
-    {#                        {% endif %}#}
+                              {% if form.non_field_errors %}
+                                  <div class="alert alert-danger">{{ form.non_field_errors}}</div>
+                              {% endif %}
 
                             {% csrf_token %}
                             {% for f in form.visible_fields %}

@@ -138,6 +138,7 @@ class LoginUserView(DataMixin, LoginView):
     def get_context_data(self, **kwargs):
         context = super(LoginView, self).get_context_data()
         dop_context = {
+            'section_type': 'log_sec'
         }
         c_def = self.get_user_context(**dop_context)
 
@@ -178,6 +179,7 @@ class BookingView(DataMixin, CreateView):
 
         dop_context = {
             'hotel': hotel,
+            'section_type': 'book_sec'
         }
 
         c_def = self.get_user_context(**dop_context)
@@ -229,7 +231,8 @@ class ProfileView(DataMixin, CreateView):
             context_bookings.append(added)
         dop_context = {
             'bookings': context_bookings,
-            'payments': payments
+            'payments': payments,
+            'section_type': 'profile_sec'
         }
         c_def = self.get_user_context(**dop_context)
         context = dict(list(context.items()) + list(c_def.items()))
@@ -252,14 +255,15 @@ def register(request):
             client = client_form.save(commit=False)
             client.user = user
             client.save()
-
     else:
         form = RegisterUserForm()
         client_form = RegisterClientForm()
     context = {
         'user': form,
-        'client': client_form
+        'client': client_form,
+        'section_type': 'reg_sec'
     }
+    print(context)
     return render(request, 'tours/register.html', context=context)
 
 # def profile_view(request):
