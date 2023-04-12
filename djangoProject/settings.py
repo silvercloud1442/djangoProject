@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+import pygraphviz
 
 from django.conf import settings
 
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "debug_toolbar",
+    'django_extensions',
     'tours.apps.ToursConfig',
 ]
 
