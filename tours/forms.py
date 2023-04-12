@@ -29,7 +29,7 @@ class RegisterUserForm(forms.ModelForm):
 
 class RegisterClientForm(forms.ModelForm):
     FIO = forms.CharField(label='*FIO')
-    birthday = forms.DateField(label='*Birthday', widget=DateInput)
+    birthday = forms.DateField(label='*Birthday', widget=DateInput, validators=[date_valid])
     email = forms.EmailField(label='*Email')
     phone = forms.CharField(label="phone", required=False)
     passport_series_number = forms.CharField(label='*passport series/number')

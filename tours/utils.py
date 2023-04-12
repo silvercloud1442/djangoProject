@@ -8,8 +8,25 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.edit import FormMixin
 from django import forms
 from django.urls import reverse_lazy, reverse
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext as _
+import re
 
+class UppercaseValidator(object):
 
+    '''The password must contain at least 1 uppercase letter, A-Z.'''
+
+    def validate(self, password, user=None):
+        if not re.findall('[A-Z]', password):
+            raise ValidationError(
+                _("Пароль слишком простой"),
+                code='password_no_upper',
+            )
+
+    def get_help_text(self):
+        return _(
+            "Пароль должен содержать заглавные буквы"
+        )
 
 
 class DataMixin:
