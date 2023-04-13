@@ -178,6 +178,8 @@
 		<div class="sidebar-inner">
 			<div class="widget-area clearfix">
 				<div class="widget widget_azh_widget">
+
+
 					<div>
 						<div class="container">
 							<div class="row">
@@ -209,65 +211,24 @@
 								<div class="col-sm-12 col-md-3">
 									<h4>Cities Covered</h4>
 									<ul class="two-columns">
-										<li><a href="#!">Sydney</a>
-										</li>
-										<li><a href="#!">Basel</a>
-										</li>
-										<li><a href="#!">Copenhagen</a>
-										</li>
-										<li><a href="#!">Frankfurt</a>
-										</li>
-										<li><a href="#!">Vancouver</a>
-										</li>
-										<li><a href="#!">Auckland</a>
-										</li>
-										<li><a href="#!">Vienna</a>
-										</li>
-										<li><a href="#!">Los Angeles</a>
-										</li>
+										{% for tour in cities %}
+											<li><a href="{{ tour.get_absolute_url }}">{{ tour.city }}</a>
+											</li>
+										{% endfor %}
+
 									</ul>
 								</div>
 								<div class="col-sm-12 col-md-3">
-									<h4>Address</h4>
-									<p>28800 Orchard Lake Road, Suite 180 Farmington Hills, U.S.A. Landmark : Next To Airport</p>
-									<p> <span class="foot-phone">Phone: </span> <span class="foot-phone">+01 1245 2541</span> </p>
+									<h4>Адрес</h4>
+									<p>362002, Республика Северная Осетия-Алания, г.Владикавказ, ул. Молодежная, д.7, Владикавказский филиал Финуниверситета</p>
+									<p> <span class="foot-phone">Контактная информация</span> <span>+7-928-494-70-19</span>
+									<span>arseniy.msk070683@gmail.com</span> </p>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="foot-sec2">
-						<div class="container">
-							<div class="row">
-								<div class="col-sm-12 col-md-3">
-									<h4>Payment Options</h4>
-									<p class="hasimg"> <img src="{% static 'images/payment.png' %}" alt="payment"> </p>
-								</div>
-								<div class="col-sm-12 col-md-4">
-									<h4>Subscribe Now</h4>
-									<form>
-										<ul class="foot-subsc">
-											<li>
-												<input type="text" placeholder="Enter your email id"> </li>
-											<li>
-												<input type="submit" value="submit"> </li>
-										</ul>
-									</form>
-								</div>
-								<div class="col-sm-12 col-md-5 foot-social">
-									<h4>Follow with us</h4>
-									<p>Join the thousands of other There are many variations of passages of Lorem Ipsum available</p>
-									<ul>
-										<li><a href="#!"><i class="fa fa-facebook" aria-hidden="true"></i></a> </li>
-										<li><a href="#!"><i class="fa fa-google-plus" aria-hidden="true"></i></a> </li>
-										<li><a href="#!"><i class="fa fa-twitter" aria-hidden="true"></i></a> </li>
-										<li><a href="#!"><i class="fa fa-linkedin" aria-hidden="true"></i></a> </li>
-										<li><a href="#!"><i class="fa fa-youtube" aria-hidden="true"></i></a> </li>
-										<li><a href="#!"><i class="fa fa-whatsapp" aria-hidden="true"></i></a> </li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
+
+
 				</div>
 			</div>
 			<!-- .widget-area -->
@@ -277,134 +238,6 @@
 	<!-- #quaternary -->
 </footer>
 
-    <section>
-		<!-- LOGIN SECTION -->
-		<div id="modal1" class="modal fade" role="dialog">
-			<div class="log-in-pop">
-				<div class="log-in-pop-right">
-					<a href="#" class="pop-close" data-dismiss="modal"><img src="{% static 'images/cancel.png' %}" alt="" />
-					</a>
-					<h4>Login</h4>
-					<p>Don't have an account? Create your account. It's take less then a minutes</p>
-					<form class="s12" method="POST">
-
-                        {% csrf_token %}
-                        {% for f in login_form %}
-                            <div>
-                                <div class="input-field s12">
-                                    {{ f }}
-                                    <label>{{ f.label }}</label>
-                                </div>
-                            </div>
-                        {% endfor %}
-						<div>
-							<div class="input-field s4">
-								<input type="submit" value="Login" class="waves-effect waves-light log-in-btn"> </div>
-						</div>
-
-
-
-						<div>
-							<div class="input-field s12"> <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#modal3">Forgot password</a> | <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#modal2">Create a new account</a> </div>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-
-		<!-- REGISTER SECTION -->
-		<div id="modal2" class="modal fade" role="dialog">
-			<div class="log-in-pop">
-
-				<div class="log-in-pop-right">
-					<a href="#" class="pop-close" data-dismiss="modal"><img src="{% static 'images/cancel.png' %}" alt="" />
-					</a>
-					<h4>Create an Account</h4>
-					<p>Don't have an account? Create your account. It's take less then a minutes</p>
-					<form class="s12">
-
-						<div>
-							<div class="input-field s12">
-								<input type="text" data-ng-model="name1" class="validate">
-								<label>User name</label>
-							</div>
-						</div>
-
-						<div>
-							<div class="input-field s12">
-								<input type="email" class="validate">
-								<label>Email id</label>
-							</div>
-						</div>
-
-						<div>
-							<div class="input-field s12">
-								<input type="password" class="validate">
-								<label>Password</label>
-							</div>
-						</div>
-
-						<div>
-							<div class="input-field s12">
-								<input type="password" class="validate">
-								<label>Confirm password</label>
-							</div>
-						</div>
-
-						<div>
-							<div class="input-field s4">
-								<input type="submit" value="Register" class="waves-effect waves-light log-in-btn"> </div>
-						</div>
-
-						<div>
-							<div class="input-field s12"> <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#modal1">Are you a already member ? Login</a> </div>
-						</div>
-
-					</form>
-				</div>
-			</div>
-		</div>
-
-		<!-- FORGOT SECTION -->
-		<div id="modal3" class="modal fade" role="dialog">
-			<div class="log-in-pop">
-				<div class="log-in-pop-left">
-					<h1>Hello... <span>{{ name3 }}</span></h1>
-					<p>Don't have an account? Create your account. It's take less then a minutes</p>
-					<h4>Login with social media</h4>
-					<ul>
-						<li><a href="#"><i class="fa fa-facebook"></i> Facebook</a>
-						</li>
-						<li><a href="#"><i class="fa fa-google"></i> Google+</a>
-						</li>
-						<li><a href="#"><i class="fa fa-twitter"></i> Twitter</a>
-						</li>
-					</ul>
-				</div>
-				<div class="log-in-pop-right">
-					<a href="#" class="pop-close" data-dismiss="modal"><img src="{% static 'images/cancel.png' %}" alt="" />
-					</a>
-					<h4>Forgot password</h4>
-					<p>Don't have an account? Create your account. It's take less then a minutes</p>
-					<form class="s12">
-						<div>
-							<div class="input-field s12">
-								<input type="text" data-ng-model="name3" class="validate">
-								<label>User name or email id</label>
-							</div>
-						</div>
-						<div>
-							<div class="input-field s4">
-								<input type="submit" value="Submit" class="waves-effect waves-light log-in-btn"> </div>
-						</div>
-						<div>
-							<div class="input-field s12"> <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#modal1">Are you a already member ? Login</a> | <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#modal2">Create a new account</a> </div>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</section>
 
 	<!--ALL SCRIPT FILES-->
 	<script src="{% static 'js/jquery.min.js' %}"></script>

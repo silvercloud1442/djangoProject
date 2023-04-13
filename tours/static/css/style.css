@@ -184,7 +184,7 @@ th {
     width: 100%;
     height: 100%;
     padding-top: 30px;
-    padding-bottom: 30px;
+    padding-bottom: 170px;
 }
 
 .book_sec {
@@ -194,7 +194,7 @@ th {
     width: 100%;
     height: 100%;
     padding-top: 30px;
-    padding-bottom: 30px;
+    padding-bottom: 170px;
 }
 
 .profile_sec {
@@ -204,7 +204,7 @@ th {
     width: 100%;
     height: 100%;
     padding-top: 30px;
-    padding-bottom: 30px;
+    padding-bottom: 170px;
 }
 
 .reg_sec {
@@ -214,7 +214,7 @@ th {
     width: 100%;
     height: 100%;
     padding-top: 30px;
-    padding-bottom: 30px;
+    padding-bottom: 170px;
 }
 .tours_sec {
     background: url(../images/slide5.jpg) no-repeat;
@@ -317,8 +317,8 @@ th {
     padding: 10px 15px !important;
 }
 .dropdown-content {} .hom-body-section {
-    padding-top: 300px;
-    padding-bottom: 130px;
+    padding-top: 178px;
+    padding-bottom: 320px;
 }
 .hom-body-section:before {
     content: '';
@@ -1705,7 +1705,8 @@ td {} .inn-com p {} .inn-com-form {} .inn-com-form form {
 }
 .log-in-pop-right {
     float: left;
-    padding: 50px;
+    padding: 20px;
+    padding-top: 0px;
 }
 .log-in-pop-right h4 {
     font-size: 24px;
@@ -1831,7 +1832,6 @@ td {} .inn-com p {} .inn-com-form {} .inn-com-form form {
 .db-left-2 {
     position: relative;
     overflow: hidden;
-    padding: 20px 20px 60% 20px;
 }
 .db-left-2 ul {
     margin-bottom: 0px;

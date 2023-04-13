@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, DetailView, ListView, CreateView, FormView
 
 from tours.forms import *
-from tours.utils import DataMixin
+from tours.mixin import DataMixin
 from tours.models import *
 
 
@@ -197,6 +197,11 @@ class ProfileView(DataMixin, CreateView):
     template_name = 'tours/profile.html'
     success_url = reverse_lazy('index')
 
+    def get(self, request, *args, **kwargs):
+        if self.request.user.id != self.kwargs['user_id']:
+            return redirect('index')
+        return super().get(request, *args, **kwargs)
+
     def get_form_kwargs(self, *args, **kwargs):
         kwargs = super(ProfileView, self).get_form_kwargs()
         user = User.objects.get(pk=self.request.user.id)
@@ -215,6 +220,7 @@ class ProfileView(DataMixin, CreateView):
         tours = Tours.objects.all()
         transit = Transit.objects.all()
         user = User.objects.get(pk=self.kwargs['user_id'])
+
         client = get_object_or_404(Clients, user=user)
         payments = Payment.objects.filter(client=client)
         bookings = Booking.objects.filter(client=client)

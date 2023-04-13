@@ -16,7 +16,7 @@
     <!--DASHBOARD SECTION-->
     <div class="dashboard">
         <div class="db-righ">
-            <h4>My payments</h4>
+            <h4>Мои способы оплаты</h4>
             <ul>
                 {% for payment in payments %}
                     <li>{{ payment }}</li>
@@ -31,8 +31,7 @@
             <div class="db-left-2">
                <div class="log-in-pop">
                     <div class="log-in-pop-right">
-                        <h4>Add payment</h4>
-                        <p>Don't have an account? Create your account. It's take less then a minutes</p>
+                        <h4>Добавить способ оплаты</h4>
                         <form class="s12" method="post">
                               {% if form.non_field_errors %}
                                   <div class="alert alert-danger">{{ form.non_field_errors}}</div>
@@ -60,7 +59,7 @@
 
                             <div>
                                 <div class="input-field s4">
-                                    <button type="submit" class="btn waves-effect waves-light">Book</button>
+                                    <button type="submit" class="btn waves-effect waves-light">Добавить</button>
                                 </div>
                             </div>
                         </form>
@@ -72,8 +71,8 @@
             <div class="db-cent-3">
                 <div class="db-cent-table db-com-table">
                     <div class="db-title">
-                        <h3><img src="images/icon/dbc6.png" alt=""/> My Events</h3>
-                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form</p>
+                        <h3><img src="images/icon/dbc6.png" alt=""/>Мои туры</h3>
+                        <p>Здесь отображается информация о ваших оформленных турах</p>
                     </div>
                     <table class="bordered responsive-table">
                         <thead>

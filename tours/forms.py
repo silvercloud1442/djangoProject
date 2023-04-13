@@ -15,32 +15,32 @@ class PasswordInput(forms.PasswordInput):
     input_type = "password"
 
 class LoginForm(AuthenticationForm):
-    username = forms.CharField(label='Username')
-    password = forms.CharField(label='Password', widget=forms.PasswordInput)
+    username = forms.CharField(label='Логин')
+    password = forms.CharField(label='Пароль', widget=forms.PasswordInput)
 
 class RegisterUserForm(forms.ModelForm):
-    username = forms.CharField(label='*Login')
-    password1 = forms.CharField(label='*Password', widget=PasswordInput)
-    password2 = forms.CharField(label='*Confirm password', widget=PasswordInput)
+    username = forms.CharField(label='*Логин')
+    password1 = forms.CharField(label='*Пароль', widget=PasswordInput)
+    password2 = forms.CharField(label='*Повтор пароля', widget=PasswordInput)
 
     class Meta:
         model = User
         fields = ('username', 'password1', 'password2')
 
 class RegisterClientForm(forms.ModelForm):
-    FIO = forms.CharField(label='*FIO')
-    birthday = forms.DateField(label='*Birthday', widget=DateInput, validators=[date_valid])
+    FIO = forms.CharField(label='*ФИО')
+    birthday = forms.DateField(label='*дата рождения', widget=DateInput, validators=[date_valid_revers])
     email = forms.EmailField(label='*Email')
-    phone = forms.CharField(label="phone", required=False)
-    passport_series_number = forms.CharField(label='*passport series/number')
-    inter_passport_series_number = forms.CharField(label='international passport series/number', required=False)
+    phone = forms.CharField(label="Номер телефона", required=False)
+    passport_series_number = forms.CharField(label='*Серия/номер паспорта')
+    inter_passport_series_number = forms.CharField(label='Серия/номер загран. паспорта', required=False)
 
     class Meta:
         model = Clients
         fields = ('FIO', 'birthday', 'email', 'phone', 'passport_series_number', 'inter_passport_series_number',)
 
 class BookingForm(forms.ModelForm):
-    room = forms.ModelChoiceField(label='Комната', queryset=Rooms.objects.none(), )
+    room = forms.ModelChoiceField(label='Номер', queryset=Rooms.objects.none(), )
     payment = forms.ModelChoiceField(label='Способ оплаты', queryset=Payment.objects.none(), )
     adults_count = forms.IntegerField()
     kids_count = forms.IntegerField()
