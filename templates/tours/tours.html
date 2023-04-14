@@ -5,7 +5,7 @@
 {% block content %}
         <style>
 .inn-room-book {
-  margin-top: 18%;
+  margin-top: 7%;
   text-align: center;
   padding: 7px 4px;
   color: #fff;
@@ -43,7 +43,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="page-head">
-						<h2>Room Types</h2>
+						<h2>Сам не прав</h2>
 						<div class="head-title">
 							<div class="hl-1"></div>
 							<div class="hl-2"></div>
@@ -65,14 +65,14 @@
                             <div class="r2 r-com r-com-1">
                                 <h3>{{ tour.name }}</h3>
 {#                                <h4>Review</h4>#}
-                                <div class="r1-ratt"><p>{{ tour.description|truncatewords:25 }}</p>
-                            </div>
-
-
+                                <div class="r1-ratt"><p>{{ tour.description|truncatewords:25 }}</p></div>
+                                {% if tour.need_inter_pass %}
+                                    <span class="label label-danger">Требуется загран. паспорт</span>
+                                {% endif %}
                             </div>
                             <!-- Hotel -->
                             <div class="r2 r-com r-com-1">
-                                <h3>Отель</h3>
+                                <h3>Отель:</h3>
                                 <a href="{{ tour.hotel.get_absolute_url }}"><h4>{{ tour.hotel.name }}</h4></a>
 
                                 <div class="r2-ratt"><p>Rating: <i class="fa fa-star"></i> <span>{{ tour.hotel.rating }} / 5 </span></p> </div>
@@ -82,15 +82,15 @@
 
                             <!-- DATE -->
                             <div class="r3 r-com r-com-1">
-                                <h3>Дата:</h3>
-                                <h4>{{ tour.transit_in.start_datetime|date:"d M" }} - {{ tour.transit_back.end_datetime|date:"d M" }}</h4>
+                                <h3>Дата: {{ tour.transit_in.start_datetime|date:"d M" }} - {{ tour.transit_back.end_datetime|date:"d M" }}</h3>
+                                <h4></h4>
                             </div>
 
 
                             <!--ROOM PRICE-->
                             <div class="r4 r-com r-com-1">
-                                <h3>Стоимость</h3>
-                                <p><span class="room-price-1">от {{ tour.base_price }} р.</span> <span class="room-price"></span> </p>
+                                <h3>Стоимость: <span class="room-price-1">от {{ tour.base_price }} р.</span> <span class="room-price"></span></h3>
+                                <p> </p>
                             </div>
 
                             <!--ROOM BOOKING BUTTON-->

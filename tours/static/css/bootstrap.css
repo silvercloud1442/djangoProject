@@ -4935,6 +4935,7 @@ a.label:focus {
 }
 .label-danger {
     background-color: #d9534f;
+    font-size: 13px;
 }
 .label-danger[href]:hover,
 .label-danger[href]:focus {
