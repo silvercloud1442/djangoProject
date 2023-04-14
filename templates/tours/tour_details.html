@@ -101,7 +101,7 @@
                                     <div class="re-room-list">
                                         <div class="col-md-4 re-room-list-1"><img src="{{ hotel.main_image.url }}" alt=""> </div>
                                         <div class="col-md-5 re-room-list-2">
-                                            <p><b>Описание: </b>{{ hotel.description }}</p>
+                                            <p><b>Описание: </b>{{ hotel.description|truncatewords:30 }}</p>
                                             <div class="r2-ratt"><b>Rating</b> <i class="fa fa-star"></i> {{ hotel.rating }}/5 </div>
                                         </div>
 
