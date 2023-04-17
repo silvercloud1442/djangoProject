@@ -11,6 +11,12 @@ payment_systems = (('Visa', 'Visa'),
 class DateInput(forms.DateInput):
     input_type = "date"
 
+class ChoiceInput(forms.Select):
+    input_type = 'date'
+
+# class Numberinput(forms.NumberInput):
+#     read
+
 class PasswordInput(forms.PasswordInput):
     input_type = "password"
 
@@ -61,8 +67,10 @@ class BookingForm(forms.ModelForm):
         super(BookingForm, self).__init__(*args, **kwargs)
         self.fields['payment'].queryset = payment
         self.fields['room'].queryset = rooms
-        self.fields['kids_count'] = forms.IntegerField(max_value=self.tour_inp.max_kids, label='Количество детей', min_value=0, initial=0)
-        self.fields['adults_count'] = forms.IntegerField(max_value=self.tour_inp.max_adults, label='Количество взрослых', min_value=0, initial=0)
+        self.fields['kids_count'] = forms.IntegerField(max_value=self.tour_inp.max_kids, label='Количество детей',
+                                                       min_value=0, initial=0)
+        self.fields['adults_count'] = forms.IntegerField(max_value=self.tour_inp.max_adults, label='Количество взрослых',
+                                                         min_value=0, initial=0, widget=forms.NumberInput(attrs={'type':'number'}))
 
 
     def clean(self):
@@ -90,7 +98,7 @@ class BookingForm(forms.ModelForm):
         fields = ('room', 'payment', 'adults_count', 'kids_count',  'client', 'tour', 'total_price', 'payment_status')
 
 class PaymentForm(forms.ModelForm):
-    payment_system = forms.ChoiceField(choices=payment_systems, label='Платежная система')
+    payment_system = forms.ChoiceField(choices=payment_systems, label='Платежная система', widget=forms.Select())
     card_number = forms.CharField(label='Номер карты', validators=[car_number_valid])
     card_date = forms.DateField(label='Срок действия', widget=DateInput, validators=[date_valid])
 

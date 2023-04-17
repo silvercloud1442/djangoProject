@@ -1727,6 +1727,7 @@ td {} .inn-com p {} .inn-com-form {} .inn-com-form form {
     box-sizing: border-box;
     height: 45px;
     border-radius: 2px;
+    width: 100%;
 }
 .log-in-pop-right form textarea {
     border: 1px solid #dfdfdf;
@@ -1835,13 +1836,13 @@ td {} .inn-com p {} .inn-com-form {} .inn-com-form form {
 }
 .db-left-2 ul {
     margin-bottom: 0px;
+    padding: 0px;
 }
 .db-left-2 ul li {
     list-style-type: none;
     float: left;
-    width: 50%;
-    border-bottom: 1px solid #f7485f;
-}
+    width: 100%;
+}/*
 .db-left-2 ul li:nth-child(1) {
     border-right: 1px solid #f7485f;
 }
@@ -1857,7 +1858,7 @@ td {} .inn-com p {} .inn-com-form {} .inn-com-form form {
 }
 .db-left-2 ul li:nth-child(8) {
     border-bottom: 0px solid #f7485f;
-}
+}*/
 .db-left-2 ul li a {
     color: #ffffff;
     padding: 12px 7px;

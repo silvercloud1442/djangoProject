@@ -4501,7 +4501,7 @@ button.btn-floating {
     cursor: pointer;
     line-height: 25px;
     width: 100%;
-    text-align: left;
+    text-align: center;
     text-transform: none;
     padding-bottom: 0px !important;
     padding-top: 5px;
