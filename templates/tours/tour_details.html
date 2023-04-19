@@ -46,6 +46,9 @@
 
 					<div class="inn-detail-p1 inn-com">
 						<h2>{{ tour.name }}</h2>
+                        {% if tour.need_inter_pass %}
+                            <span class="label label-danger">Требуется загран. паспорт</span>
+                        {% endif %}
 
 {#						<div class="r2-ratt">#}
 {#                            {% for i in rat %}#}

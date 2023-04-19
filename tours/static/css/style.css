@@ -1269,7 +1269,7 @@ td {} .inn-com p {} .inn-com-form {} .inn-com-form form {
     margin-bottom: 25px;
 }
 .gall-grid img {
-    width: 300px;
+    width: 350px;
     height: 200px;
     padding: 25px;
 }
@@ -1459,6 +1459,7 @@ td {} .inn-com p {} .inn-com-form {} .inn-com-form form {
 }
 .room-photo-gal img {
     padding: 10px;
+    margin-left: 34px;
 }
 .typo-com {} .typo-com input {
     border: 1px solid #dfdfdf;
