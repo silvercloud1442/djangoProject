@@ -2,15 +2,43 @@
 
 {% block content %}
 {% load static %}
+
+<style>
+.log-in-pop {
+    position: relative;
+    overflow: hidden;
+    /* height: 100%; */
+    /* bottom: 0px; */
+    background: #fff;
+    width: 18%;
+    margin: 0 auto;
+    margin-top: 5%;
+}
+.log-in-pop-right {
+    float: left;
+    padding: 20px;
+    padding-top: 0px;
+    width: 100%;
+}
+</style>
+
 <div id="modal2">
 			<div class="log-in-pop">
 				<div class="log-in-pop-right">
-					<a href="#" class="pop-close" data-dismiss="modal"><img src="{% static 'images/cancel.png' %}" alt="" />
-					</a>
-					<h4>Login</h4>
-					<p>Don't have an account? Create your account. It's take less then a minutes</p>
+					<h4>Авторизация</h4>
 					<form class="s12" method="post">
                         {% csrf_token %}
+
+						{% if messages %}
+							{% for message in messages %}
+								<div class="alert alert-danger">{{ message }}</div>
+							{% endfor %}
+						{% endif %}
+
+						{% if f.non_field_errors %}
+							<div class="alert alert-danger">{{ f.non_field_errors }}</div>
+						{% endif %}
+
                         {% for f in form %}
                             <div>
                                 <h5>{{ f.label }}</h5>
@@ -24,14 +52,13 @@
                             </div>
                         {% endfor %}
 
-
 						<div>
 							<div class="input-field s4">
-								<button type="submit" class="btn waves-effect waves-light">Login</button>
+								<button type="submit" class="btn waves-effect waves-light">Войти</button>
 						</div>
 
 						<div>
-							<div class="input-field s12"> <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#modal1">Are you a already member ? Login</a> </div>
+							<div class="input-field s12"> <a href="{% url 'register' %}">Нет аккаунта? Зарегестрируйтесь</a> </div>
 						</div>
 
 					</form>

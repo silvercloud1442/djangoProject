@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, DetailView, ListView, CreateView, FormView
+from django.contrib import messages
 
 from tours.forms import *
 from tours.mixin import DataMixin
@@ -16,7 +17,8 @@ class IndexPage(DataMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         dop_context = {
-            'section_type': 'main'
+            'section_type': 'main',
+            'title': 'Lors du dernier voyage'
         }
         c_def = self.get_user_context(**dop_context)
 
@@ -34,14 +36,6 @@ class TourView(DataMixin, DetailView):
 
         hotel = Hotels.objects.get(name=context['tour'].hotel)
 
-        # form = BookingForm()
-        # form.fields['room'].queryset = Rooms.objects.filter(hotel=hotel)
-        # if self.request.user.is_authenticated:
-        #     client = Clients.objects.get(user=self.request.user.id)
-        #     form.fields['payment'].queryset = Payment.objects.filter(client=client)
-        # else:
-        #     form.fields['payment'].queryset = Payment.objects.none()
-
         images = TourImages.objects.filter(tour=context['tour'])
         images_urls = [image.image.url for image in images]
 
@@ -55,24 +49,13 @@ class TourView(DataMixin, DetailView):
             'main_text': main_text,
             'fechs' : fechs,
             'images_urls': images_urls,
-            # 'form': form
+            'title': context['tour'].name
 
         }
         c_def = self.get_user_context(**dop_context)
         context = dict(list(context.items()) + list(c_def.items()))
 
         return context
-    # def post(self, request, *args, **kwargs):
-    #     form = BookingForm(request.POST)
-    #     print(form)
-    #     if form.is_valid():
-    #         booking = form.save(commit=False)
-    #         booking.client = self.client
-    #         booking.payment_status = 'Оплачен'
-    #         booking.tour = self.context['tour']
-    #         booking.save()
-    #         return HttpResponse('good')
-    #     return HttpResponse('bad')
 
 class HotelView(DataMixin, DetailView):
     model = Hotels
@@ -101,7 +84,8 @@ class HotelView(DataMixin, DetailView):
             'fechs' : fechs,
             'rat': range(int(context['hotel'].rating)),
             'images_urls': images_urls,
-            'rooms': rooms
+            'rooms': rooms,
+            'title': context['hotel'].name
         }
 
         c_def = self.get_user_context(**dop_context)
@@ -125,6 +109,7 @@ class ToursView(DataMixin, ListView):
         context = super(ToursView, self).get_context_data(**kwargs)
 
         dop_context = {
+            'title': 'Доступные туры'
         }
 
         c_def = self.get_user_context(**dop_context)
@@ -139,13 +124,17 @@ class LoginUserView(DataMixin, LoginView):
     def get_context_data(self, **kwargs):
         context = super(LoginView, self).get_context_data()
         dop_context = {
-            'section_type': 'log_sec'
+            'section_type': 'log_sec',
+            'title': 'Авторизация'
         }
         c_def = self.get_user_context(**dop_context)
 
         context = dict(list(context.items()) + list(c_def.items()))
         return context
 
+    def form_invalid(self, form):
+        messages.error(self.request, 'Неверный логин или пароль')
+        return super().form_invalid(form)
     def get_success_url(self):
         return reverse_lazy('index')
     
@@ -180,7 +169,8 @@ class BookingView(DataMixin, CreateView):
 
         dop_context = {
             'hotel': hotel,
-            'section_type': 'book_sec'
+            'section_type': 'book_sec',
+            'title': f'Оформление : {tour.name}'
         }
 
         c_def = self.get_user_context(**dop_context)
@@ -239,7 +229,8 @@ class ProfileView(DataMixin, CreateView):
         dop_context = {
             'bookings': context_bookings,
             'payments': payments,
-            'section_type': 'profile_sec'
+            'section_type': 'profile_sec',
+            'title': 'Мой профиль'
         }
         c_def = self.get_user_context(**dop_context)
         context = dict(list(context.items()) + list(c_def.items()))
@@ -268,7 +259,8 @@ def register(request):
     context = {
         'user': form,
         'client': client_form,
-        'section_type': 'reg_sec'
+        'section_type': 'reg_sec',
+        'title': 'Регистрация'
     }
     print(context)
     return render(request, 'tours/register.html', context=context)
@@ -281,4 +273,7 @@ def logout_user(request):
     return redirect('index')
 
 def base(request):
-    return render(request, 'tours/base.html')
+    context = {
+        'title': 'База кормит'
+    }
+    return render(request, 'tours/base.html', context=context)

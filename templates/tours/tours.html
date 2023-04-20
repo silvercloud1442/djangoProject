@@ -20,47 +20,47 @@
   background: -webkit-linear-gradient(to right, #d6ae7b, #eacda3);
   background: linear-gradient(to top, #caa65a, #dbbb75);
 }
+.page-head {
+    text-align: center;
+    width: 60%;
+    margin: 0 auto;
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
 </style>
 
 
 		<!--TOP BANNER-->
-		<div class="inn-banner">
-			<div class="container">
-				<div class="row">
-					<h4>All Room Types</h4>
-					<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.
-						<p>
-							<ul>
-								<li><a href="#">Home</a> </li>
-								<li><a href="#">Rooms</a> </li>
-							</ul>
-				</div>
-			</div>
+<!--		<div class="inn-banner">-->
+<!--			<div class="container">-->
+<!--				<div class="row">-->
+<!--					<h4>Доступные туры</h4>-->
+<!--					<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.-->
+<!--						<p>-->
+<!--							<ul>-->
+<!--								<li><a href="#">Home</a> </li>-->
+<!--								<li><a href="#">Rooms</a> </li>-->
+<!--							</ul>-->
+<!--				</div>-->
+<!--			</div>-->
 
-		</div>
+<!--		</div>-->
 		<!--TOP SECTION-->
 		<div class="inn-body-section pad-bot-70">
 			<div class="container">
 				<div class="row">
 					<div class="page-head">
-						<h2>Сам не прав</h2>
+						<h2>Доступные туры</h2>
 						<div class="head-title">
 							<div class="hl-1"></div>
 							<div class="hl-2"></div>
 							<div class="hl-3"></div>
 						</div>
-						<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.</p>
 					</div>
-
-
-					<!--ROOM SECTION-->
-
                     {% for tour in tours %}
-
                         <div class="room room-1">
                             <!--MAGE-->
                             <div class="r1 r-com r-com-1 r1-1"><img src="{{ tour.main_image.url }}" alt="" /> </div>
-
                             <!--DESCRIPTION-->
                             <div class="r2 r-com r-com-1">
                                 <h3>{{ tour.name }}</h3>
@@ -70,11 +70,11 @@
                                     <span class="label label-danger">Требуется загран. паспорт</span>
                                 {% endif %}
                             </div>
+
                             <!-- Hotel -->
                             <div class="r2 r-com r-com-1">
                                 <h3>Отель:</h3>
                                 <a href="{{ tour.hotel.get_absolute_url }}"><h4>{{ tour.hotel.name }}</h4></a>
-
                                 <div class="r2-ratt"><p>Rating: <i class="fa fa-star"></i> <span>{{ tour.hotel.rating }} / 5 </span></p> </div>
                                 <p>{{ tour.hotel.description|truncatewords:25 }}</p>
                             </div>
@@ -100,36 +100,35 @@
                         <!--END ROOM SECTION-->
 
                     {% endfor %}
-
 				</div>
 			</div>
-                        {% if page_obj.has_other_pages %}
-                            <ul class="pagination">
-                                {% if page_obj.has_previous %}
-                                    <li class="waves-effect"><a href="?page={{ page_obj.previous_page_number }}"><</a></li>
-                                {% else %}
-                                    <li class="disabled"><a><</a></li>
-                                {% endif %}
+        </div>
+        <div>
+            {% if page_obj.has_other_pages %}
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                        <li class="waves-effect"><a href="?page={{ page_obj.previous_page_number }}"><</a></li>
+                    {% else %}
+                        <li class="disabled"><a><</a></li>
+                    {% endif %}
 
-                                {% for p in paginator.page_range %}
-                                    {% if page_obj.number == p %}
-                                        <li class="active"><a>{{ p }}</a></li>
+                    {% for p in paginator.page_range %}
+                        {% if page_obj.number == p %}
+                            <li class="active"><a>{{ p }}</a></li>
 
-                                    {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
-                                        <li class="waves-effect"><a href="?page={{ p }}">{{ p }}</a></li>
-                                    {% endif %}
-                                {% endfor %}
-
-                                {% if page_obj.has_next %}
-                                    <li class="waves-effect"><a href="?page={{ page_obj.next_page_number }}">></a></li>
-{#                                {% else %}#}
-{#                                    <li class="disabled"><a href="?page={{ page_obj.next_page_number }}"><</a></li>#}
-                                {% endif %}
-
-                            </ul>
+                        {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
+                            <li class="waves-effect"><a href="?page={{ p }}">{{ p }}</a></li>
                         {% endif %}
-		</div>
+                    {% endfor %}
 
+                    {% if page_obj.has_next %}
+                        <li class="waves-effect"><a href="?page={{ page_obj.next_page_number }}">></a></li>
+                    {% else %}
+                        <li class="disabled"><a>></a></li>
+                    {% endif %}
+                </ul>
+            {% endif %}
+        </div>
 {% endblock %}
 
 </html>

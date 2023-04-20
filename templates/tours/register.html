@@ -12,7 +12,23 @@
     margin-inline-end: 0px;
     font-weight: bold;
 }
-    </style>
+.log-in-pop {
+    position: relative;
+    overflow: hidden;
+    /* height: 100%; */
+    /* bottom: 0px; */
+    background: #fff;
+    width: 25%;
+    margin: 0 auto;
+    margin-top: 5%;
+}
+.log-in-pop-right {
+    float: left;
+    padding: 20px;
+    padding-top: 0px;
+    width: 100%;
+}
+</style>
 
 
 <div id="modal2">
@@ -20,7 +36,6 @@
 
 				<div class="log-in-pop-right">
 					<h4>Регистрация</h4>
-					<p>Don't have an account? Create your account. It's take less then a minutes</p>
 					<form class="s12" method="post">
 
                         {% for f in user %}
@@ -62,6 +77,8 @@
 {#							</div>#}
 {#						</div>#}
 
+
+						<p>*Обязателные поля</p>
 
 						<div>
 							<div class="input-field s4">
