@@ -105,7 +105,7 @@
         </div>
         <div>
             {% if page_obj.has_other_pages %}
-                <ul class="pagination">
+                <ul class="pagination" style="text-align: center;">
                     {% if page_obj.has_previous %}
                         <li class="waves-effect"><a href="?page={{ page_obj.previous_page_number }}"><</a></li>
                     {% else %}
@@ -115,7 +115,6 @@
                     {% for p in paginator.page_range %}
                         {% if page_obj.number == p %}
                             <li class="active"><a>{{ p }}</a></li>
-
                         {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
                             <li class="waves-effect"><a href="?page={{ p }}">{{ p }}</a></li>
                         {% endif %}

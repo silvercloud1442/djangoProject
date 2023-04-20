@@ -2014,7 +2014,7 @@ html {
 }
 ul:not(.browser-default) {
     /*padding-left: 45.6%;*/
-    text-align: center;
+    text-align: right;
     list-style-type: none;
 }
 ul:not(.browser-default) li {
@@ -2116,6 +2116,9 @@ img.responsive-img,
 video.responsive-video {
     max-width: 100%;
     height: auto;
+}
+.pagination {
+    text-align: center;
 }
 .pagination li {
     display: inline-block;
