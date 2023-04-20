@@ -258,7 +258,7 @@ th {
 
 
 .menu-section {
-    padding: 25px 0px;
+    padding-bottom: 10px;
     background: #2a2b33;
     box-shadow: 0px 1px 20px rgba(0, 0, 0, 0.52);
     position: fixed;
@@ -274,6 +274,9 @@ th {
 .logo img {} .menu-bar {
     float: left;
     width: 80%;
+    margin-top: 22px;
+}
+
 }
 .menu-bar ul {
     padding: 0px;
