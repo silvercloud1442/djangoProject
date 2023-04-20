@@ -2014,7 +2014,7 @@ html {
 }
 ul:not(.browser-default) {
     /*padding-left: 45.6%;*/
-    text-align: right;
+    text-align: center;
     list-style-type: none;
 }
 ul:not(.browser-default) li {

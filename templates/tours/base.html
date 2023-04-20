@@ -39,7 +39,7 @@
 						<ul class="left">
 							<li class="left-li"><a href="{% url 'tours' %}">Туры</a></li>
 						</ul>
-						<ul>
+						<ul style="text-align: right;">
 							{% if user.is_authenticated %}
 								<li><a href="{% url 'profile' user_id=user.id%}">Мой профиль</a>
 								<li><a href="{% url 'logout' %}">Выйти</a></li>
