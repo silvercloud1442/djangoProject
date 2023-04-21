@@ -206,12 +206,6 @@ class ProfileView(DataMixin, CreateView):
 
         return kwargs
 
-    def get_queryset(self):
-        return Booking.objects.filter(client__user_id=self.request.user.id).\
-                                    select_related('tour').\
-                                    select_related('transit').\
-                                    select_related('payment')
-
     def get_context_data(self, **kwargs):
         context = super(ProfileView, self).get_context_data(**kwargs)
         tours = Tours.objects.all()
@@ -220,11 +214,13 @@ class ProfileView(DataMixin, CreateView):
 
         client = get_object_or_404(Clients, user=user)
         payments = Payment.objects.filter(client=client)
-        bookings = Booking.objects.filter(client=client)
+        bookings = Booking.objects.filter(client__user_id=self.request.user.id).\
+                                    select_related('tour').\
+                                    select_related('payment')
 
         context_bookings = []
         for book in bookings:
-            tour = tours.get(id=book.tour.id)
+            tour = tours.select_related('transit_in').select_related('transit_back').get(id=book.tour.id)
             added = []
             added.append(tour)
             added.append(book.adults_count + book.kids_count)
@@ -246,8 +242,8 @@ class ProfileView(DataMixin, CreateView):
 
     def form_valid(self, form):
         form.save()
-        user = User.objects.get(pk=self.kwargs['user_id'])
-        return redirect('profile', user_id=user.id)
+        self.user = User.objects.get(pk=self.kwargs['user_id'])
+        return redirect('profile', user_id=self.user.id)
 
 
 @csrf_exempt
