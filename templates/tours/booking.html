@@ -2,32 +2,66 @@
 
 {% block content %}
 {% load static %}
+<style>
+.select-dropdown{
+    padding-left: 0px;
+}
+.log-in-pop-right {
+	float: left;
+	padding: 39px;
+	padding-top: 0px;
+	width: 100%;
+}
+</style>
+
 <div id="modal2">
 			<div class="log-in-pop">
 
 				<div class="log-in-pop-right">
-					<a href="#" class="pop-close" data-dismiss="modal"><img src="{% static 'images/cancel.png' %}" alt="" />
-					</a>
-					<h4>Booking</h4>
-					<p>Don't have an account? Create your account. It's take less then a minutes</p>
+					<h4>Оформление тура</h4>
+					<p>Тур: {{ tour_name }}</p>
 					<form class="s12" method="post">
                         {% if form.non_field_errors %}
                             <div class="alert alert-danger">{{ form.non_field_errors}}</div>
                         {% endif %}
 
                         {% csrf_token %}
-                        {% for f in form.visible_fields %}
-                            <div>
-                                <h5>{{ f.label }}</h5>
-                                <div class="input-field s12">
-                                    {{ f }}
-                                    {% if f.errors %}
-                                        <div class="alert alert-danger">{{ f.errors }}</div>
-                                    {% endif %}
-                                </div>
-
+                        <div>
+                            <h5>{{ form.room.label }}</h5>
+                            <div class="input-field s12">
+                                {{ form.room }}
+                                {% if form.room.errors %}
+                                    <div class="alert alert-danger">{{ form.room.errors }}</div>
+                                {% endif %}
                             </div>
-                        {% endfor %}
+                        </div>
+                        <div>
+                            <h5>{{ form.payment.label }}</h5>
+                            <div class="input-field s12">
+                                {{ form.payment }}
+                                {% if form.payment.errors %}
+                                    <div class="alert alert-danger">{{ form.payment.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div>
+                            <h5>{{ form.adults_count.label }}, до {{ max_adults}}</h5>
+                            <div class="input-field s12">
+                                {{ form.adults_count }}
+                                {% if form.adults_count.errors %}
+                                    <div class="alert alert-danger">{{ form.adults_count.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div>
+                            <h5>{{ form.kids_count.label }}, до {{ max_kids }}</h5>
+                            <div class="input-field s12">
+                                {{ form.kids_count }}
+                                {% if form.kids_count.errors %}
+                                    <div class="alert alert-danger">{{ form.kids_count.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
                         {% for f in form.hidden_fields %}
                             {{ f }}
                             {{ f.errors }}
@@ -37,7 +71,7 @@
 
 						<div>
 							<div class="input-field s4">
-								<button type="submit" class="btn waves-effect waves-light">Book</button>
+								<button type="submit" class="btn waves-effect waves-light">Оформить</button>
 						</div>
 					</form>
 				</div>

@@ -67,7 +67,6 @@
                     <div class="inn-detail-p1 inn-com">
 						<div class="detail-title">
 							<h2>Галерея</h2>
-							<p>a procedure intended to establish the quality, performance, or reliability of something, especially before it is taken into widespread use.</p>
 						</div>
 
 						<div class="room-photo-all">
@@ -83,8 +82,7 @@
 
 					<div class="inn-detail-p1 inn-com inn-com-list-point">
 						<div class="detail-title">
-							<h2>Фичи</h2>
-							<p>a procedure intended to establish the quality, performance, or reliability of something, especially before it is taken into widespread use.</p>
+							<h2>особенности тура</h2>
 						</div>
 						<ul style="text-align: center;">
                             {% for fech in fechs %}
@@ -98,7 +96,6 @@
 					<div class="inn-detail-p1 inn-com">
 						<div class="detail-title">
 							<h2>Отель</h2>
-							<p>a procedure intended to establish the quality, performance, or reliability of something, especially before it is taken into widespread use.</p>
 						</div>
 						<div class="re-room">
 							<ul>
@@ -109,10 +106,8 @@
                                             <p><b>Описание: </b>{{ hotel.description|truncatewords:30 }}</p>
                                             <div class="r2-ratt"><b>Rating</b> <i class="fa fa-star"></i> {{ hotel.rating }}/5 </div>
                                         </div>
-
-{#                                                <p><b>Amenities: </b>Television, Wi-Fi, Hair dryer, Towels, Dining, Music, GYM and more.. </p> <span><b>Includes</b> : Free Parking, Breakfast, VAT</span> <span><b>Maxinum </b> : 4 Persons</span> </div>#}
                                         <div class="col-md-3 re-room-list-2">
-                                                <a href="{{ hotel.get_absolute_url }}" class="inn-room-book">Подробнее</a>
+                                            <a href="{{ hotel.get_absolute_url }}" class="inn-room-book">Подробнее</a>
                                         </div>
                                     </div>
                                 </li>

@@ -142,6 +142,10 @@ class BookingView(DataMixin, CreateView):
     form_class = BookingForm
     template_name = 'tours/booking.html'
     success_url = reverse_lazy('index')
+    
+    def __init__(self, *args, **kwargs):
+        self.context = {}
+        super().__init__(*args, **kwargs)
 
     def get_form_kwargs(self, *args, **kwargs):
         kwargs = super(BookingView, self).get_form_kwargs()
@@ -154,6 +158,9 @@ class BookingView(DataMixin, CreateView):
         user = User.objects.get(pk=self.request.user.id)
         kwargs['client'] = Clients.objects.get(user=user)
 
+        self.context['max_adults'] = tour.max_adults
+        self.context['max_kids'] = tour.max_kids
+
         if self.request.user.is_authenticated:
             client = Clients.objects.get(pk=self.request.user.id)
             kwargs['payment'] = Payment.objects.filter(client=client)
@@ -163,18 +170,18 @@ class BookingView(DataMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
         tour = Tours.objects.get(slug=self.kwargs['tour_slug'])
         hotel = Hotels.objects.get(tours__slug=tour.slug)
 
         dop_context = {
             'hotel': hotel,
             'section_type': 'book_sec',
+            'tour_name': tour.name,
             'title': f'Оформление : {tour.name}'
         }
 
         c_def = self.get_user_context(**dop_context)
-        context = dict(list(context.items()) + list(c_def.items()))
+        context = dict(list(context.items()) + list(c_def.items()) + list(self.context.items()))
 
         return context
 
@@ -257,6 +264,7 @@ def register(request):
         form = RegisterUserForm()
         client_form = RegisterClientForm()
     context = {
+        'cities': Hotels.objects.all()[:6],
         'user': form,
         'client': client_form,
         'section_type': 'reg_sec',
