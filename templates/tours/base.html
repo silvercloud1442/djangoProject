@@ -37,7 +37,7 @@
 					</div>
 					<div class="menu-bar">
 						<ul class="left">
-							<li class="left-li"><a href="{% url 'tours' %}">Туры</a></li>
+							<li class="left-li"><a href="{% url 'tours' ordering='name'%}">Туры</a></li>
 						</ul>
 						<ul style="text-align: right;">
 							{% if user.is_authenticated %}

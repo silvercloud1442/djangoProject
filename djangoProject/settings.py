@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "debug_toolbar",
     'django_extensions',
     'tours.apps.ToursConfig',
+    'tours.templatetags.custom_tags'
 ]
 
 MIDDLEWARE = [

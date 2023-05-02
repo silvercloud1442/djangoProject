@@ -94,7 +94,6 @@ class HotelView(DataMixin, DetailView):
         return context
 
 class ToursView(DataMixin, ListView):
-    paginate_by = 2
     model = Tours
     template_name = 'tours/tours.html'
     context_object_name = 'tours'
@@ -107,9 +106,12 @@ class ToursView(DataMixin, ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(ToursView, self).get_context_data(**kwargs)
-
+        ord = self.request.GET.get('ordering')
+        if not ord:
+            ord = 'name'
         dop_context = {
-            'title': 'Доступные туры'
+            'title': 'Доступные туры',
+            'ordering': ord
         }
 
         c_def = self.get_user_context(**dop_context)

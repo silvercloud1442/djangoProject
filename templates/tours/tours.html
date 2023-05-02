@@ -1,9 +1,28 @@
 {% extends 'tours/base.html' %}
-
+{% load custom_tags %}
 
 
 {% block content %}
-        <style>
+<style>
+.select-wrapper {
+    position: relative;
+    border: 1px solid #dfdfdf;
+    /* padding: 8px; */
+    box-sizing: border-box;
+    /* height: 45px; */
+    border-radius: 2px;
+    color: #7d7d7d;
+    width: 130%;
+}
+.log-in-pop {
+    position: relative;
+    overflow: hidden;
+    /* height: 100%; */
+    /* bottom: 0px; */
+    background: #fff;
+    width: 74%;
+    margin: 0 auto;
+}
 .inn-room-book {
   margin-top: 7%;
   text-align: center;
@@ -26,6 +45,12 @@
     margin: 0 auto;
     margin-bottom: 30px;
     margin-top: 30px;
+}
+.room-1 {
+    width: 47%;
+    float: left;
+    margin: 14px;
+    height: 1030px;
 }
 </style>
 
@@ -57,7 +82,34 @@
 							<div class="hl-3"></div>
 						</div>
 					</div>
-                    {% for tour in tours %}
+{#                action="{% url 'tours' %}"#}
+
+                <div class="db-left-2">
+                    <div class="log-in-pop">
+                        <div class="log-in-pop-right">
+                            <form class="s12" method="get" >
+                                <h5>Сортировать по:</h5>
+                                <div class="input-field s12">
+                                    <select name="ordering" id="ordering">
+                                        <option value="name">От А до Я</option>
+                                        <option value="-name">От Я до А</option>
+                                        <option value="base_price">По возрастанию цены</option>
+                                        <option value="-base_price">По убыванию цены</option>
+                                    </select>
+                                </div>
+                                <div class="input-field s4">
+                                    <button type="submit" class="btn waves-effect waves-light">Применить</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+                    {% for tour in tours.all|sort_by:ordering %}
                         <div class="room room-1">
                             <!--MAGE-->
                             <div class="r1 r-com r-com-1 r1-1"><img src="{{ tour.main_image.url }}" alt="" /> </div>
