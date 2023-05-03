@@ -274,7 +274,7 @@ th {
 .logo img {} .menu-bar {
     float: left;
     width: 80%;
-    margin-top: 22px;
+    margin-top: 14px;
 }
 
 .menu-bar ul {
@@ -285,6 +285,7 @@ th {
 }
 .menu-bar ul li {
     display: inline-block;
+    margin-left: 60px;
 }
 .menu-bar ul li a {
     color: #cbcbcb;
@@ -1732,6 +1733,16 @@ td {} .inn-com p {} .inn-com-form {} .inn-com-form form {
     border-radius: 2px;
     width: 100%;
 }
+
+.log-in-pop-right form input [type="date"] {
+    border: 1px solid #dfdfdf;
+    padding: 8px;
+    box-sizing: border-box;
+    height: 45px;
+    border-radius: 2px;
+    width: fit-content;
+}
+
 .log-in-pop-right form textarea {
     border: 1px solid #dfdfdf;
     padding: 8px;
@@ -3376,7 +3387,6 @@ footer {
     padding: 100px 0 100px;
     border-top: 1px solid #f5f5f5;
     background-color: #ffffff;
-    margin-top: 100px;
 }
 .foot-logo img {
     padding-bottom: 20px;
@@ -3597,6 +3607,7 @@ footer ul li a {
 }
 .pad-bot-70 {
     padding-bottom: 70px;
+    margin-bottom: 100px;
 }
 .pad-bot-50 {
     padding-bottom: 50px;

@@ -8,9 +8,6 @@ payment_systems = (('Visa', 'Visa'),
                    ('MasterCard', 'MasterCard'),
                    ('МИР', 'МИР'))
 
-class DateInput(forms.DateInput):
-    input_type = "date"
-
 class ChoiceInput(forms.Select):
     input_type = 'date'
 
@@ -35,7 +32,9 @@ class RegisterUserForm(forms.ModelForm):
 
 class RegisterClientForm(forms.ModelForm):
     FIO = forms.CharField(label='*ФИО')
-    birthday = forms.DateField(label='*дата рождения', widget=DateInput, validators=[date_valid_revers])
+    birthday = forms.DateField(label='*дата рождения',
+                               widget=forms.DateInput(attrs={'style': 'width : fit-content', 'type': 'date'}),
+                               validators=[date_valid_revers])
     email = forms.EmailField(label='*Email')
     phone = forms.CharField(label="Номер телефона", required=False)
     passport_series_number = forms.CharField(label='*Серия/номер паспорта')
@@ -100,7 +99,9 @@ class BookingForm(forms.ModelForm):
 class PaymentForm(forms.ModelForm):
     payment_system = forms.ChoiceField(choices=payment_systems, label='Платежная система', widget=forms.Select())
     card_number = forms.CharField(label='Номер карты', validators=[car_number_valid])
-    card_date = forms.DateField(label='Срок действия', widget=DateInput, validators=[date_valid])
+    card_date = forms.DateField(label='Срок действия',
+                                widget=forms.DateInput(attrs={'style': 'width : fit-content', 'type': 'date'}),
+                                validators=[date_valid])
 
     client = forms.ModelChoiceField(queryset=Clients.objects.none(), widget=forms.HiddenInput(), required=False)
 

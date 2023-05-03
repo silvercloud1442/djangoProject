@@ -19,6 +19,7 @@
     /* bottom: 0px; */
     background: #fff;
     width: 25%;
+    min-width: 400px;
     margin: 0 auto;
     margin-top: 5%;
 }
@@ -56,6 +57,7 @@
                                 <h5>{{ f.label }}</h5>
     							<div class="input-field s12">
                                     {{ f }}
+
                                     {% if f.errors %}
                                         <div class="alert alert-danger">{{ f.errors }}</div>
                                     {% endif %}
