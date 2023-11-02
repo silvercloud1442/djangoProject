@@ -3,4 +3,4 @@ def function(arg2=1, *args, **kwargs):
     print(args)
     print(kwargs)
 
-function(1, *(1238792, 123123, 123), **{'title': 1012312})
+function(1, *(1238792, 12, 123), **{'title': 1012312})
